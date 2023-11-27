@@ -37,7 +37,7 @@ size = Vector2(34, 265.812)
 script = ExtResource("1_o30mq")
 
 [node name="bg_sprite" type="Sprite2D" parent="."]
-z_index = -2
+z_index = -3
 position = Vector2(640, 360)
 texture = ExtResource("1_yueei")
 
@@ -73,6 +73,7 @@ scale = Vector2(1.2, 1.2)
 texture = ExtResource("5_8q82t")
 
 [node name="wall" type="Node2D" parent="."]
+z_index = -2
 position = Vector2(300, 119)
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="wall"]
