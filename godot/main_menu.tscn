@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://ce0jqm7a7wtam"]
+
+[ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/menu/menu_background.png" id="1_xro8v"]
+[ext_resource type="Texture2D" uid="uid://dbw4bk3bkwogj" path="res://assets/menu/title_text_atlas.png" id="2_wusqa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2pb0"]
+atlas = ExtResource("2_wusqa")
+region = Rect2(0, 0, 602, 179)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lfy3"]
+atlas = ExtResource("2_wusqa")
+region = Rect2(0, 179, 602, 179)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjqw3"]
+atlas = ExtResource("2_wusqa")
+region = Rect2(0, 358, 602, 179)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogc78"]
+resource_name = "game_title"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2pb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lfy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjqw3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="menu_background" type="Sprite2D" parent="."]
+z_index = -3
+texture = ExtResource("1_xro8v")
+centered = false
+
+[node name="menu_game_title" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(640, 120)
+sprite_frames = SubResource("SpriteFrames_ogc78")
+autoplay = "default"
