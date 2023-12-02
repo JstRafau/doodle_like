@@ -1,13 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://ce0jqm7a7wtam"]
+[gd_scene load_steps=16 format=3 uid="uid://ce0jqm7a7wtam"]
 
 [ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/menu/menu_background.png" id="1_xro8v"]
 [ext_resource type="Texture2D" uid="uid://dbw4bk3bkwogj" path="res://assets/menu/title_text_atlas.png" id="2_wusqa"]
-[ext_resource type="Texture2D" uid="uid://db38efnpofiw0" path="res://assets/menu/btns/new_game.png" id="3_2keqe"]
+[ext_resource type="Texture2D" uid="uid://ce7g27ssk7n0u" path="res://assets/menu/btns/new_game.png" id="3_yj3e8"]
 [ext_resource type="Texture2D" uid="uid://ck7ujq14uce0p" path="res://assets/menu/btns/continue.png" id="4_mdhcw"]
-[ext_resource type="Texture2D" uid="uid://c00jafwegtnoh" path="res://assets/menu/btns/continue_disabled.png" id="4_rcspv"]
-[ext_resource type="Texture2D" uid="uid://da2w6ej8828sr" path="res://assets/menu/btns/settings.png" id="5_0pbde"]
-[ext_resource type="Texture2D" uid="uid://duujxh03k7yap" path="res://assets/menu/btns/exit_game.png" id="7_20bmy"]
-[ext_resource type="Texture2D" uid="uid://dd3wpp56qg3t8" path="res://assets/menu/btns/exit_game_selected.png" id="8_yac8g"]
+[ext_resource type="Texture2D" uid="uid://cre0yder86f0e" path="res://assets/menu/btns/continue_disabled.png" id="4_rcspv"]
+[ext_resource type="Texture2D" uid="uid://dv6lsuwjdc85d" path="res://assets/menu/btns/new_game_hover.png" id="4_w7vml"]
+[ext_resource type="Texture2D" uid="uid://db0altw60lvuh" path="res://assets/menu/btns/settings.png" id="5_0pbde"]
+[ext_resource type="Texture2D" uid="uid://bq4oo6628xiua" path="res://assets/menu/btns/continue_hover.png" id="6_51xcq"]
+[ext_resource type="Texture2D" uid="uid://k76dd6sxtjaw" path="res://assets/menu/btns/exit_game.png" id="7_20bmy"]
+[ext_resource type="Texture2D" uid="uid://buk1d5aaxwj2d" path="res://assets/menu/btns/settings_hover.png" id="9_qxnm0"]
+[ext_resource type="Texture2D" uid="uid://cuhk0f41ia1rx" path="res://assets/menu/btns/exit_game_hover.png" id="11_nwdc4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2pb0"]
 atlas = ExtResource("2_wusqa")
@@ -96,7 +99,8 @@ anchor_right = 1.0
 offset_bottom = 120.0
 grow_horizontal = 2
 action_mode = 0
-texture_normal = ExtResource("3_2keqe")
+texture_normal = ExtResource("3_yj3e8")
+texture_hover = ExtResource("4_w7vml")
 
 [node name="continue_btn" type="TextureButton" parent="btns"]
 layout_mode = 1
@@ -105,9 +109,11 @@ anchor_right = 1.0
 offset_top = 120.0
 offset_bottom = 240.0
 grow_horizontal = 2
+disabled = true
 action_mode = 0
-texture_normal = ExtResource("4_rcspv")
-texture_disabled = ExtResource("4_mdhcw")
+texture_normal = ExtResource("4_mdhcw")
+texture_hover = ExtResource("6_51xcq")
+texture_disabled = ExtResource("4_rcspv")
 
 [node name="settings_btn" type="TextureButton" parent="btns"]
 layout_mode = 1
@@ -117,6 +123,7 @@ offset_top = 240.0
 offset_bottom = 360.0
 grow_horizontal = 2
 texture_normal = ExtResource("5_0pbde")
+texture_hover = ExtResource("9_qxnm0")
 
 [node name="exit_game_btn" type="TextureButton" parent="btns"]
 layout_mode = 1
@@ -126,4 +133,4 @@ offset_top = 360.0
 offset_bottom = 480.0
 grow_horizontal = 2
 texture_normal = ExtResource("7_20bmy")
-texture_hover = ExtResource("8_yac8g")
+texture_hover = ExtResource("11_nwdc4")
