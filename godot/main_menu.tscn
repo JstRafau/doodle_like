@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ce0jqm7a7wtam"]
+[gd_scene load_steps=13 format=3 uid="uid://ce0jqm7a7wtam"]
 
 [ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/menu/menu_background.png" id="1_xro8v"]
 [ext_resource type="Texture2D" uid="uid://dbw4bk3bkwogj" path="res://assets/menu/title_text_atlas.png" id="2_wusqa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c00jafwegtnoh" path="res://assets/menu/btns/continue_disabled.png" id="4_rcspv"]
 [ext_resource type="Texture2D" uid="uid://da2w6ej8828sr" path="res://assets/menu/btns/settings.png" id="5_0pbde"]
 [ext_resource type="Texture2D" uid="uid://duujxh03k7yap" path="res://assets/menu/btns/exit_game.png" id="7_20bmy"]
+[ext_resource type="Texture2D" uid="uid://dd3wpp56qg3t8" path="res://assets/menu/btns/exit_game_selected.png" id="8_yac8g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2pb0"]
 atlas = ExtResource("2_wusqa")
@@ -125,3 +126,4 @@ offset_top = 360.0
 offset_bottom = 480.0
 grow_horizontal = 2
 texture_normal = ExtResource("7_20bmy")
+texture_hover = ExtResource("8_yac8g")
