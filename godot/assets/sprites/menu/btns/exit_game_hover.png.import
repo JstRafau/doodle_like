@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cre0yder86f0e"
-path="res://.godot/imported/continue_disabled.png-80ddee72d4cbbbaeff9ab9257c37753d.ctex"
+uid="uid://cuhk0f41ia1rx"
+path="res://.godot/imported/exit_game_hover.png-210e280dd1ec7e3e02f05d176d3f4d7b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/menu/btns/continue_disabled.png"
-dest_files=["res://.godot/imported/continue_disabled.png-80ddee72d4cbbbaeff9ab9257c37753d.ctex"]
+source_file="res://assets/sprites/menu/btns/exit_game_hover.png"
+dest_files=["res://.godot/imported/exit_game_hover.png-210e280dd1ec7e3e02f05d176d3f4d7b.ctex"]
 
 [params]
 
