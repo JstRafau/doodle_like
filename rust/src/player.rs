@@ -6,44 +6,74 @@ use godot::{
     },
 };
 
+
 #[derive(GodotClass)]
 #[class(base=Sprite2D)]
 struct Player {
-    speed: f64,
-    angular_speed: f64,
-    poz: bool,
+    hit_points: u8,
+    speed: f32,
     #[base]
     sprite: Base<Sprite2D>
 }
-impl Player {
-    fn pos (&mut self) {
-        self.sprite.translate(Vector2::new(200.0, 300.0));
-        self.poz = false;
-    }
-}
+
 #[godot_api]
 impl ISprite2D for Player {
     fn init(sprite: Base<Sprite2D>) -> Self {
         godot_print!("Hello, world!"); // Prints to the Godot console
         Self {
-            speed: 400.0,
-            angular_speed: std::f64::consts::PI,
-            poz: true,
+            //
+            //  Those values should be (preferably) held
+            //  in a separate JSON/TOML/YML file.
+            //
+            hit_points: 5,
+            speed: 100.0,
             sprite
         }
     }
+    fn ready(&mut self) {
+        self.sprite.set_position(Vector2::new(640.0, 360.0));
+        //                               ^__^^^  ^__^^^
+        //  Magic numbers. Replace them with screen_width/2
+        //  or something like that :-)
+        self.hit_points -= 1;
+    }
     fn physics_process(&mut self, delta: f64) {
-        // In GDScript, this would be: 
-        // rotation += angular_speed * delta
-        if self.poz {
-            self.pos();
-        }
-        godot_print!("Hello, world!: {delta}"); // Prints to the Godot console
-        self.sprite.rotate((self.angular_speed * delta) as f32);
-        // The 'rotate' method requires a f32, 
-        // therefore we convert 'self.angular_speed * delta' which is a f64 to a f32
+        let current_pos = self.sprite.get_position();
         if Input::singleton().is_action_pressed("mv_right".into()) {
-            self.sprite.translate(Vector2::RIGHT);
+            //
+            //  This whole validation will be unnecesary as soon as I add hitboxes.
+            //  It also aplies to orher move inputs.
+            //
+            let new_pos: f32 = match current_pos.x as i32 {
+                80..=1200 => current_pos.x + (self.speed * delta as f32),
+                _ => current_pos.x,
+            };
+            self.sprite.set_position(Vector2::new(new_pos, current_pos.y));
+            godot_print!("RIGHT");
+        };
+        if Input::singleton().is_action_pressed("mv_left".into()) {
+            let new_pos: f32 = match current_pos.x as i32 {
+                80..=1280 => current_pos.x - (self.speed * delta as f32),
+                _ => current_pos.x,
+            };
+            self.sprite.set_position(Vector2::new(new_pos, current_pos.y));
+            godot_print!("LEFT");
+        };
+        if Input::singleton().is_action_pressed("mv_up".into()) {
+            let new_pos: f32 = match current_pos.y as i32 {
+                200..=720 => current_pos.y - (self.speed * delta as f32),
+                _ => current_pos.y,
+            };
+            self.sprite.set_position(Vector2::new(current_pos.x, new_pos));
+            godot_print!("UP");
+        };
+        if Input::singleton().is_action_pressed("mv_down".into()) {
+            let new_pos: f32 = match current_pos.y as i32 {
+                0..=520 => current_pos.y + (self.speed * delta as f32),
+                _ => current_pos.y,
+            };
+            self.sprite.set_position(Vector2::new(current_pos.x, new_pos));
+            godot_print!("DOWN");
         };
     }
 }
