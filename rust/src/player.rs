@@ -26,7 +26,7 @@ impl ISprite2D for Player {
             //  in a separate JSON/TOML/YML file.
             //
             hit_points: 5,
-            speed: 100.0,
+            speed: 200.0,
             sprite
         }
     }
@@ -39,41 +39,36 @@ impl ISprite2D for Player {
     }
     fn physics_process(&mut self, delta: f64) {
         let current_pos = self.sprite.get_position();
+        let mut new_pos: (f32, f32) = (current_pos.x, current_pos.y);
         if Input::singleton().is_action_pressed("mv_right".into()) {
             //
             //  This whole validation will be unnecesary as soon as I add hitboxes.
             //  It also aplies to orher move inputs.
             //
-            let new_pos: f32 = match current_pos.x as i32 {
-                80..=1200 => current_pos.x + (self.speed * delta as f32),
-                _ => current_pos.x,
+            new_pos.0 = match new_pos.0 as i32 {
+                80..=1200 => new_pos.0 + (self.speed * delta as f32),
+                _ => new_pos.0,
             };
-            self.sprite.set_position(Vector2::new(new_pos, current_pos.y));
-            godot_print!("RIGHT");
         };
         if Input::singleton().is_action_pressed("mv_left".into()) {
-            let new_pos: f32 = match current_pos.x as i32 {
-                80..=1280 => current_pos.x - (self.speed * delta as f32),
-                _ => current_pos.x,
+            new_pos.0 = match current_pos.x as i32 {
+                80..=1280 => new_pos.0 - (self.speed * delta as f32),
+                _ => new_pos.0,
             };
-            self.sprite.set_position(Vector2::new(new_pos, current_pos.y));
-            godot_print!("LEFT");
         };
         if Input::singleton().is_action_pressed("mv_up".into()) {
-            let new_pos: f32 = match current_pos.y as i32 {
-                200..=720 => current_pos.y - (self.speed * delta as f32),
-                _ => current_pos.y,
+            new_pos.1 = match new_pos.1 as i32 {
+                200..=720 => new_pos.1 - (self.speed * delta as f32),
+                _ => new_pos.1,
             };
-            self.sprite.set_position(Vector2::new(current_pos.x, new_pos));
-            godot_print!("UP");
         };
         if Input::singleton().is_action_pressed("mv_down".into()) {
-            let new_pos: f32 = match current_pos.y as i32 {
-                0..=520 => current_pos.y + (self.speed * delta as f32),
-                _ => current_pos.y,
+            new_pos.1 = match new_pos.1 as i32 {
+                0..=520 => new_pos.1 + (self.speed * delta as f32),
+                _ => new_pos.1,
             };
-            self.sprite.set_position(Vector2::new(current_pos.x, new_pos));
-            godot_print!("DOWN");
         };
+        
+        self.sprite.set_position(Vector2::new(new_pos.0, new_pos.1));
     }
 }
