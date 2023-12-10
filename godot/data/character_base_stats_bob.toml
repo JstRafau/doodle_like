@@ -1,0 +1,12 @@
+[bob]
+name = "Bob"
+hp = 5
+speed = 200.0
+damage = 10.0
+
+[bob.sprites] # Sprites that don't exist for now
+sprite_atlas = "assets/sprites/characters/bob/sprite_atlas.png"
+#   Sprites should include:
+#   - standing still
+#   - walinkg in four directions: ← ↓ ↑ → , atleast two frames each
+#   - recieving damage

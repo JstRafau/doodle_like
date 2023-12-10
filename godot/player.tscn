@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://er2rh44bvc80"]
-
-[ext_resource type="Texture2D" uid="uid://bpp6ijakqo4j1" path="res://assets/icon.png" id="1_dgs3b"]
-
-[node name="sceen" type="Node2D"]
-
-[node name="Player" type="Player" parent="."]
-texture = ExtResource("1_dgs3b")

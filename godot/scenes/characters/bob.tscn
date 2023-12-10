@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b00awsiu2y2e"]
+
+[ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/staaa.png" id="1_ya0n6"]
+[ext_resource type="Texture2D" uid="uid://dysye7rw8llmx" path="res://assets/waaa.png" id="2_n67td"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wtjkr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ya0n6")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n67td")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ya0n6")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Bob" type="Bob"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wtjkr")
+animation = &"stand"

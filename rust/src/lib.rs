@@ -3,7 +3,7 @@ use godot::{
     private::class_macros::init::ExtensionLibrary,
 };
 
-pub mod player;
+pub mod character;
 
 struct DoodleLikeRs;
 
