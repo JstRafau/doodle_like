@@ -1,16 +1,16 @@
-use godot::{prelude::*, engine::{Sprite2D, PhysicsBody2D, CollisionShape2D, AnimatedSprite2D}};
+use godot::{prelude::*, engine::{PhysicsBody2D, CollisionShape2D, AnimatedSprite2D, CharacterBody2D, ICharacterBody2D}};
 
 
 #[derive(GodotClass)]
-#[class(base=Node2D)]
-struct Bob {
+#[class(base=CharacterBody2D)]
+pub struct Bob {
     name: String,
     hit_points: u8,
     speed: real,
     damage: f64,
     sprite_atlas: String,
     #[base]
-    base: Base<Node2D>,
+    base: Base<CharacterBody2D>,
 }
 
 #[godot_api]
@@ -25,8 +25,6 @@ impl Bob {
     
     #[func]
     pub fn start(&mut self) {
-        let viewport = self.base.get_viewport_rect();
-        self.base.set_global_position(Vector2::new(viewport.size.x / 2., viewport.size.y / 2.));
         self.base.show();
 
         let mut collision_shape = self
@@ -38,8 +36,8 @@ impl Bob {
 }
 
 #[godot_api]
-impl INode2D for Bob {
-    fn init(base: Base<Node2D>) -> Self {
+impl ICharacterBody2D for Bob {
+    fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
             name: String::from("Bob"), 
             hit_points: 5,
@@ -52,10 +50,11 @@ impl INode2D for Bob {
 
     fn ready(&mut self) {
     }
+
     fn process(&mut self, delta: f64) {
         let mut animated_sprite = self
             .base
-            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2D");
+            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
 
         let mut velocity = Vector2::new(0.0, 0.0);
 
@@ -78,14 +77,16 @@ impl INode2D for Bob {
 
             let animation;
 
-            if velocity.x > 0. || velocity.y > 0. {
+            if velocity.x != 0. || velocity.y != 0. {
                 animation = "walk";
+                animated_sprite.set_flip_h(velocity.x > 0.0);
             } else {
                 animation = "stand";
             }
 
             animated_sprite.play_ex().name(animation.into()).done();
         } else {
+            animated_sprite.play_ex().name("stand".into()).done();
             animated_sprite.stop();
         }
 
@@ -93,8 +94,8 @@ impl INode2D for Bob {
         let position = self.base.get_global_position() + change;
         let viewport = self.base.get_viewport_rect();
         let position = Vector2::new(
-            position.x.clamp(viewport.size.x / 15. + 30., viewport.size.x / 15. * 14. - 30.),
-            position.y.clamp(viewport.size.y / 9. + 40., viewport.size.y / 9. * 8. - 40.),
+            position.x.clamp(0., viewport.size.x),
+            position.y.clamp(0., viewport.size.y),
         );
         self.base.set_global_position(position);
     }

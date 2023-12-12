@@ -4,6 +4,7 @@ use godot::{
 };
 
 pub mod character;
+pub mod rooms;
 
 struct DoodleLikeRs;
 

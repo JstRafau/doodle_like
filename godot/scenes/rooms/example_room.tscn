@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccv4tccib2khq"]
+
+[ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/sprites/menu/menu_background.png" id="1_63fl3"]
+[ext_resource type="PackedScene" uid="uid://b00awsiu2y2e" path="res://scenes/characters/bob.tscn" id="2_j16s0"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_piwmp"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_or2u6"]
+normal = Vector2(0, 1)
+
+[node name="ExampleRoom" type="ExampleRoom"]
+
+[node name="CollisionShape2DLeft" type="CollisionShape2D" parent="."]
+position = Vector2(0, 360)
+shape = SubResource("WorldBoundaryShape2D_piwmp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(640, 0)
+shape = SubResource("WorldBoundaryShape2D_or2u6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("1_63fl3")
+
+[node name="Bob" parent="." instance=ExtResource("2_j16s0")]

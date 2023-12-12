@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b00awsiu2y2e"]
+[gd_scene load_steps=5 format=3 uid="uid://b00awsiu2y2e"]
 
 [ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/staaa.png" id="1_ya0n6"]
 [ext_resource type="Texture2D" uid="uid://dysye7rw8llmx" path="res://assets/waaa.png" id="2_n67td"]
@@ -25,8 +25,19 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kn88t"]
+radius = 23.0
+height = 60.0
+
 [node name="Bob" type="Bob"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2DBody" type="AnimatedSprite2D" parent="."]
+z_index = 10
+z_as_relative = false
 sprite_frames = SubResource("SpriteFrames_wtjkr")
 animation = &"stand"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_kn88t")
+debug_color = Color(0, 0.537255, 0.972549, 0.419608)

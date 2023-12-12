@@ -1,1 +1,1 @@
-mod character_bob;
+pub mod character_bob;
