@@ -51,29 +51,23 @@ impl ICharacterBody2D for Bob {
     fn ready(&mut self) {
     }
 
-    fn process(&mut self, delta: f64) {
+    fn physics_process(&mut self, _delta: f64) {
+        let input_dir: Vector2 = Input::singleton().get_vector(
+            "mv_left".into(),
+            "mv_right".into(),
+            "mv_up".into(),
+            "mv_down".into(),
+        );
+        let velocity = input_dir.normalized() * self.speed;
+
         let mut animated_sprite = self
             .base
             .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
 
-        let mut velocity = Vector2::new(0.0, 0.0);
-
-        let input = Input::singleton();
-        if input.is_action_pressed("mv_right".into()) {
-            velocity += Vector2::RIGHT;
-        }
-        if input.is_action_pressed("mv_left".into()) {
-            velocity += Vector2::LEFT;
-        }
-        if input.is_action_pressed("mv_down".into()) {
-            velocity += Vector2::DOWN;
-        }
-        if input.is_action_pressed("mv_up".into()) {
-            velocity += Vector2::UP;
-        }
-
         if velocity.length() > 0.0 {
-            velocity = velocity.normalized() * self.speed;
+
+            self.base.set_velocity(velocity);
+            self.base.move_and_slide();
 
             let animation;
 
@@ -89,14 +83,8 @@ impl ICharacterBody2D for Bob {
             animated_sprite.play_ex().name("stand".into()).done();
             animated_sprite.stop();
         }
-
-        let change = velocity * real::from_f64(delta);
-        let position = self.base.get_global_position() + change;
-        let viewport = self.base.get_viewport_rect();
-        let position = Vector2::new(
-            position.x.clamp(0., viewport.size.x),
-            position.y.clamp(0., viewport.size.y),
-        );
-        self.base.set_global_position(position);
+    }
+    
+    fn process(&mut self, _delta: f64) {
     }
 }

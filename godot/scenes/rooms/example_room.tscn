@@ -12,11 +12,12 @@ normal = Vector2(0, 1)
 [node name="ExampleRoom" type="ExampleRoom"]
 
 [node name="CollisionShape2DLeft" type="CollisionShape2D" parent="."]
-position = Vector2(0, 360)
+position = Vector2(-560, 0)
 shape = SubResource("WorldBoundaryShape2D_piwmp")
+one_way_collision_margin = 8.9
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(640, 0)
+[node name="CollisionShape2DTop" type="CollisionShape2D" parent="."]
+position = Vector2(0, -280)
 shape = SubResource("WorldBoundaryShape2D_or2u6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
