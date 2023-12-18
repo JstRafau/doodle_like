@@ -1,0 +1,15 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://d1omb350828q2"]
+
+[ext_resource type="Texture2D" uid="uid://8irdok3a5bd3" path="res://assets/sprites/rooms/wall_rock_01.png" id="1_othwb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qvsdf"]
+texture = ExtResource("1_othwb")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[resource]
+tile_size = Vector2i(80, 80)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_qvsdf")
