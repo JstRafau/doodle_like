@@ -1,27 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccv4tccib2khq"]
+[gd_scene load_steps=7 format=3 uid="uid://ccv4tccib2khq"]
 
-[ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/sprites/menu/menu_background.png" id="1_63fl3"]
+[ext_resource type="Texture2D" uid="uid://rk4ghai32myu" path="res://assets/sprites/rooms/room_bg_grid_1.png" id="1_yx78r"]
 [ext_resource type="PackedScene" uid="uid://b00awsiu2y2e" path="res://scenes/characters/bob.tscn" id="2_j16s0"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_piwmp"]
 normal = Vector2(1, 0)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k30xb"]
+normal = Vector2(-1, 0)
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_or2u6"]
 normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lokuy"]
 
 [node name="ExampleRoom" type="ExampleRoom"]
 
 [node name="CollisionShape2DLeft" type="CollisionShape2D" parent="."]
-position = Vector2(-560, 0)
+position = Vector2(-600, 0)
 shape = SubResource("WorldBoundaryShape2D_piwmp")
-one_way_collision_margin = 8.9
+
+[node name="CollisionShape2DRight" type="CollisionShape2D" parent="."]
+position = Vector2(600, 0)
+shape = SubResource("WorldBoundaryShape2D_k30xb")
 
 [node name="CollisionShape2DTop" type="CollisionShape2D" parent="."]
-position = Vector2(0, -280)
+position = Vector2(0, -240)
 shape = SubResource("WorldBoundaryShape2D_or2u6")
+
+[node name="CollisionShape2DBottom" type="CollisionShape2D" parent="."]
+position = Vector2(0, 320)
+shape = SubResource("WorldBoundaryShape2D_lokuy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-texture = ExtResource("1_63fl3")
+texture = ExtResource("1_yx78r")
 
 [node name="Bob" parent="." instance=ExtResource("2_j16s0")]
