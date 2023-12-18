@@ -39,7 +39,7 @@ impl ICharacterBody2D for PlayerCharacter {
         Self {
             name: String::from("Bob"), 
             hit_points: 5,
-            speed: 200.,
+            speed: 300.,
             damage: 10.,
             base
         }
