@@ -3,13 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://8irdok3a5bd3" path="res://assets/sprites/rooms/wall_rock_01.png" id="1_othwb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qvsdf"]
+resource_name = "rock_01"
 texture = ExtResource("1_othwb")
 texture_region_size = Vector2i(80, 80)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, 40, 40, 40, 40, -40, -40, -40)
+0:0/0/physics_layer_1/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_1/angular_velocity = 0.0
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
 
 [resource]
 tile_size = Vector2i(80, 80)
 physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_qvsdf")

@@ -39,7 +39,7 @@ impl ICharacterBody2D for PlayerCharacter {
         Self {
             name: String::from("Bob"), 
             hit_points: 5,
-            speed: 300.,
+            speed: 350.,
             damage: 10.,
             base
         }
@@ -60,8 +60,14 @@ impl ICharacterBody2D for PlayerCharacter {
         let mut animated_sprite = self
             .base
             .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
+        let mut audio_walk = self.base.get_node_as::<AudioStreamPlayer>("WalkAudio");
+        audio_walk.set_bus("aaa".into());
+        let playing = audio_walk.is_playing();
 
         if velocity.length() > 0.0 {
+            if !playing {
+                audio_walk.play();
+            }
 
             self.base.set_velocity(velocity);
             self.base.move_and_slide();
@@ -81,10 +87,12 @@ impl ICharacterBody2D for PlayerCharacter {
             animated_sprite.play_ex().name(animation.into()).done();
         } else {
             animated_sprite.play_ex().name("stand".into()).done();
+            audio_walk.stop();
             animated_sprite.stop();
         }
     }
     
     fn process(&mut self, _delta: f64) {
+
     }
 }

@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b00awsiu2y2e"]
+[gd_scene load_steps=11 format=3 uid="uid://b00awsiu2y2e"]
 
 [ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/staaa.png" id="1_ya0n6"]
 [ext_resource type="Texture2D" uid="uid://dysye7rw8llmx" path="res://assets/waaa.png" id="2_n67td"]
+[ext_resource type="Texture2D" uid="uid://bi7jj8dbrl3b" path="res://assets/wa.png" id="2_t7mca"]
 [ext_resource type="Texture2D" uid="uid://cgeca7mhyhpc1" path="res://assets/staaa_up.png" id="3_aeiaq"]
 [ext_resource type="Texture2D" uid="uid://dy6p50y6nhuhj" path="res://assets/waaa_up.png" id="4_ltf4l"]
+[ext_resource type="AudioStream" uid="uid://ccue60h8b58fe" path="res://assets/audio/characters/step_60.ogg" id="5_0vv0f"]
+[ext_resource type="Texture2D" uid="uid://c8se6bt8qk4tx" path="res://assets/sprites/characters/shadow.png" id="5_5yrmr"]
+[ext_resource type="Texture2D" uid="uid://sxjt0cxuq1w5" path="res://assets/wa_up.png" id="5_hpxqr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wtjkr"]
 animations = [{
@@ -13,34 +17,46 @@ animations = [{
 }],
 "loop": true,
 "name": &"stand",
-"speed": 5.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_t7mca")
+}, {
+"duration": 1.0,
 "texture": ExtResource("2_n67td")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_t7mca")
 }, {
 "duration": 1.0,
 "texture": ExtResource("1_ya0n6")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ltf4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hpxqr")
+}, {
 "duration": 1.0,
 "texture": ExtResource("3_aeiaq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_ltf4l")
+"texture": ExtResource("5_hpxqr")
 }],
 "loop": true,
 "name": &"walk_up",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kn88t"]
-radius = 23.0
-height = 60.0
+radius = 20.0
+height = 50.0
 
 [node name="Bob" type="PlayerCharacter"]
 
@@ -48,9 +64,20 @@ height = 60.0
 z_index = 10
 z_as_relative = false
 sprite_frames = SubResource("SpriteFrames_wtjkr")
-animation = &"stand"
+animation = &"walk_up"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 10)
+[node name="MovementCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
 shape = SubResource("CapsuleShape2D_kn88t")
-debug_color = Color(0, 0.537255, 0.972549, 0.419608)
+debug_color = Color(0, 0.458824, 0.835294, 0.258824)
+
+[node name="Sprite2DShadow" type="Sprite2D" parent="."]
+position = Vector2(0, 36)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_5yrmr")
+
+[node name="WalkAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0vv0f")
+volume_db = -14.0
+max_polyphony = 3
+bus = &"aaa"

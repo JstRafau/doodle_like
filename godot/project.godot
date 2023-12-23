@@ -85,6 +85,11 @@ exit={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="movement"
+2d_physics/layer_2="projectiles"
+
 [physics]
 
 2d/default_gravity=0.0
