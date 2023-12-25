@@ -1,4 +1,4 @@
-DoodleLike is being written in [Godot 4.1](https://godotengine.org/) with [Rust](https://www.rust-lang.org/) bindings.
+DoodleLike is being written in [Godot 4.2.1](https://godotengine.org/) with [Rust](https://www.rust-lang.org/) bindings.
 You'll need both to run it.
 
 Besides that, to run it on your OS, you'll have to update libraries in the [doodlelike.gdextension](/godot/doodlelike.gdextension) file (check 

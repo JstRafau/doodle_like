@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://b00awsiu2y2e"]
 
-[ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/staaa.png" id="1_ya0n6"]
-[ext_resource type="Texture2D" uid="uid://dysye7rw8llmx" path="res://assets/waaa.png" id="2_n67td"]
-[ext_resource type="Texture2D" uid="uid://bi7jj8dbrl3b" path="res://assets/wa.png" id="2_t7mca"]
-[ext_resource type="Texture2D" uid="uid://cgeca7mhyhpc1" path="res://assets/staaa_up.png" id="3_aeiaq"]
-[ext_resource type="Texture2D" uid="uid://dy6p50y6nhuhj" path="res://assets/waaa_up.png" id="4_ltf4l"]
+[ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/sprites/characters/staaa.png" id="1_ya0n6"]
+[ext_resource type="Texture2D" uid="uid://dysye7rw8llmx" path="res://assets/sprites/characters/waaa.png" id="2_n67td"]
+[ext_resource type="Texture2D" uid="uid://bi7jj8dbrl3b" path="res://assets/sprites/characters/wa.png" id="2_t7mca"]
+[ext_resource type="Texture2D" uid="uid://cgeca7mhyhpc1" path="res://assets/sprites/characters/staaa_up.png" id="3_aeiaq"]
+[ext_resource type="Texture2D" uid="uid://dy6p50y6nhuhj" path="res://assets/sprites/characters/waaa_up.png" id="4_ltf4l"]
 [ext_resource type="AudioStream" uid="uid://ccue60h8b58fe" path="res://assets/audio/characters/step_60.ogg" id="5_0vv0f"]
 [ext_resource type="Texture2D" uid="uid://c8se6bt8qk4tx" path="res://assets/sprites/characters/shadow.png" id="5_5yrmr"]
-[ext_resource type="Texture2D" uid="uid://sxjt0cxuq1w5" path="res://assets/wa_up.png" id="5_hpxqr"]
+[ext_resource type="Texture2D" uid="uid://sxjt0cxuq1w5" path="res://assets/sprites/characters/wa_up.png" id="5_hpxqr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wtjkr"]
 animations = [{
@@ -58,13 +58,13 @@ animations = [{
 radius = 20.0
 height = 50.0
 
-[node name="Bob" type="PlayerCharacter"]
+[node name="Bob" type="PlayerCharacter" groups=["player"]]
 
 [node name="AnimatedSprite2DBody" type="AnimatedSprite2D" parent="."]
 z_index = 10
 z_as_relative = false
 sprite_frames = SubResource("SpriteFrames_wtjkr")
-animation = &"walk_up"
+animation = &"stand"
 
 [node name="MovementCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
@@ -80,4 +80,3 @@ texture = ExtResource("5_5yrmr")
 stream = ExtResource("5_0vv0f")
 volume_db = -14.0
 max_polyphony = 3
-bus = &"aaa"

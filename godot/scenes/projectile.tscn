@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt54pce0ecafq"]
+
+[ext_resource type="Texture2D" uid="uid://bgidawyrtpcn" path="res://assets/boolet.png" id="1_askqf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6n1u"]
+
+[node name="Projectile" type="Projectile"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_askqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_h6n1u")
+
+[connection signal="body_entered" from="." to="." method="on_bullet_body_entered"]
