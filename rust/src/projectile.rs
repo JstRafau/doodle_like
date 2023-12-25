@@ -3,6 +3,7 @@ use godot::{
     engine::{
         Area2D,
         IArea2D,
+        CollisionShape2D,
     },
 };
 
@@ -20,13 +21,26 @@ pub struct Projectile {
 #[godot_api]
 impl Projectile {
     #[func]
-    fn on_projectile_body_entered(&mut self, mut body: Gd<Area2D>) {
+    fn set_collision(&mut self) {
+        let mut collision_shape = self
+            .base
+            .get_node_as::<CollisionShape2D>("CollisionShape2D");
+
+        collision_shape.set_disabled(false);
+    }
+    #[func]
+    fn on_bullet_body_entered(&mut self, mut body: Gd<Node2D>) {
         if body.is_in_group("enemy".into()) {
             body.queue_free();
         }
-        self.base.queue_free();
+        if !body.is_in_group("player".into()) {
+            self.base.queue_free();
+        }
     }
-}
+    #[func]
+    fn on_visibility_screen_exited(&mut self) {
+        self.base.queue_free();
+    }}
 
 
 #[godot_api]
@@ -40,13 +54,13 @@ impl IArea2D for Projectile {
     }
 
     fn ready(&mut self) {
+        self.set_collision();
     }
 
     fn physics_process(&mut self, delta: f64) {
         let rotation = self.base.get_rotation();
-        let position = self.base.get_position()
-            + Vector2::RIGHT.rotated(rotation) * self.speed * delta as real;
-        
-        self.base.set_position(position);
+        let position = Vector2::RIGHT.rotated(rotation) * self.speed * delta as real;
+        let transform = self.base.get_transform();
+        self.base.set_transform(transform.translated(position));
     }
 }

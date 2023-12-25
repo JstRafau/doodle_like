@@ -11,7 +11,6 @@ use godot::{
 };
 
 
-
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 pub struct PlayerCharacter {
@@ -49,16 +48,10 @@ impl PlayerCharacter {
         let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
         bullet_scene.set_position(self.base.get_position());
 
-        /*
-         *  Make some code that can translate Vector2 to rotation
-         *  might have to use match for every posibility
-         *  (but I'd rather don't that)
-        */
-
+        bullet_scene.set_global_rotation(shoot_direction.angle());
         let mut owner = self.base.get_owner().unwrap();
         owner.add_child(bullet_scene.clone().upcast());
 
-        bullet_scene.set_global_rotation(shoot_direction.angle());
     }
 }
 
@@ -125,15 +118,24 @@ impl ICharacterBody2D for PlayerCharacter {
     }
     
     fn process(&mut self, _delta: f64) {
-        let shoot_direction: Vector2 = Input::singleton().get_vector(
-            "aim_left".into(),
-            "aim_right".into(),
-            "aim_up".into(),
-            "aim_down".into(),
-        );
+        let mut shoot: bool = false; 
+        for i in ["aim_left", "aim_right", "aim_up", "aim_down"] {
+            if Input::singleton().is_action_just_pressed(i.into()) {
+                shoot = true;
+                break;
+            }
+        }
+        if shoot {
+            let shoot_direction: Vector2 = Input::singleton().get_vector(
+                "aim_left".into(),
+                "aim_right".into(),
+                "aim_up".into(),
+                "aim_down".into(),
+                );
 
-        if shoot_direction.length() > 0. {
-            self.shoot(shoot_direction);
+            if shoot_direction.length() > 0. {
+                self.shoot(shoot_direction);
+            }
         }
     }
 }
