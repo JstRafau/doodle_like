@@ -5,6 +5,7 @@ use godot::{
 
 pub mod character;
 pub mod rooms;
+pub mod projectile;
 
 struct DoodleLikeRs;
 

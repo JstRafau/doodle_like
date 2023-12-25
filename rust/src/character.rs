@@ -1,15 +1,27 @@
-use godot::{prelude::*, engine::{PhysicsBody2D, CollisionShape2D, AnimatedSprite2D, CharacterBody2D, ICharacterBody2D}};
+use godot::{
+    prelude::*,
+    engine::{
+        PhysicsBody2D,
+        CollisionShape2D,
+        AnimatedSprite2D,
+        CharacterBody2D,
+        ICharacterBody2D, Area2D,
+    },
+};
+
+use crate::projectile::Projectile;
 
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 pub struct PlayerCharacter {
-    name: String,
-    hit_points: u8,
-    speed: real,
-    damage: f64,
+    pub name: String,
+    pub hit_points: u8,
+    pub speed: real,
+    pub damage: f64,
     #[base]
     base: Base<CharacterBody2D>,
+    bullet: Gd<PackedScene>,
 }
 
 #[godot_api]
@@ -31,21 +43,36 @@ impl PlayerCharacter {
 
         collision_shape.set_disabled(false);
     }
+
+    #[func]
+    fn shoot(&mut self, shoot_direction: Vector2) {
+        let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
+        bullet_scene.set_position(self.base.get_position());
+
+        bullet_scene.set_rotation(0.);
+        godot_print!("{:?}", shoot_direction);
+
+        let mut owner = self.base.get_owner().unwrap();
+        owner.add_child(bullet_scene.clone().upcast());
+    }
 }
 
 #[godot_api]
 impl ICharacterBody2D for PlayerCharacter {
     fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
-            name: String::from("Bob"), 
-            hit_points: 5,
+            name: String::from("Placeholder_Name"), 
+            hit_points: 1,
             speed: 350.,
             damage: 10.,
-            base
+            base,
+            bullet: PackedScene::new(),
         }
     }
 
     fn ready(&mut self) {
+        self.bullet = load("res://scenes/projectile.tscn");
+        godot_print!("{}", self.name);
     }
 
     fn physics_process(&mut self, _delta: f64) {
@@ -93,6 +120,15 @@ impl ICharacterBody2D for PlayerCharacter {
     }
     
     fn process(&mut self, _delta: f64) {
+        let shoot_direction: Vector2 = Input::singleton().get_vector(
+            "aim_left".into(),
+            "aim_right".into(),
+            "aim_up".into(),
+            "aim_down".into(),
+        ).normalized();
 
+        if shoot_direction.length() > 0. {
+            self.shoot(shoot_direction);
+        }
     }
 }
