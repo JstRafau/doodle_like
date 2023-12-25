@@ -12,7 +12,6 @@ use godot::{
 pub struct Projectile {
     pub speed: real,
     pub damage: f64,
-    move_direction: Vector2,
     #[base]
     base: Base<Area2D>,
 }
@@ -27,11 +26,6 @@ impl Projectile {
         }
         self.base.queue_free();
     }
-
-    #[func]
-    pub fn set_direction(&mut self, shoot_direction: Vector2) {
-        self.move_direction = shoot_direction;
-    }
 }
 
 
@@ -41,7 +35,6 @@ impl IArea2D for Projectile {
         Self {
             speed: 600.,
             damage: 10.,
-            move_direction: Vector2::RIGHT,
             base
         }
     }
@@ -50,8 +43,9 @@ impl IArea2D for Projectile {
     }
 
     fn physics_process(&mut self, delta: f64) {
+        let rotation = self.base.get_rotation();
         let position = self.base.get_position()
-            + self.move_direction * self.speed * delta as real;
+            + Vector2::RIGHT.rotated(rotation) * self.speed * delta as real;
         
         self.base.set_position(position);
     }

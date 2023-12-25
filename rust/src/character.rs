@@ -1,15 +1,15 @@
 use godot::{
     prelude::*,
     engine::{
-        PhysicsBody2D,
-        CollisionShape2D,
         AnimatedSprite2D,
+        Area2D,
+        CollisionShape2D,
         CharacterBody2D,
-        ICharacterBody2D, Area2D,
+        ICharacterBody2D,
+        PhysicsBody2D,
     },
 };
 
-use crate::projectile::Projectile;
 
 
 #[derive(GodotClass)]
@@ -49,11 +49,16 @@ impl PlayerCharacter {
         let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
         bullet_scene.set_position(self.base.get_position());
 
-        bullet_scene.set_rotation(0.);
-        godot_print!("{:?}", shoot_direction);
+        /*
+         *  Make some code that can translate Vector2 to rotation
+         *  might have to use match for every posibility
+         *  (but I'd rather don't that)
+        */
 
         let mut owner = self.base.get_owner().unwrap();
         owner.add_child(bullet_scene.clone().upcast());
+
+        bullet_scene.set_global_rotation(shoot_direction.angle());
     }
 }
 
@@ -125,7 +130,7 @@ impl ICharacterBody2D for PlayerCharacter {
             "aim_right".into(),
             "aim_up".into(),
             "aim_down".into(),
-        ).normalized();
+        );
 
         if shoot_direction.length() > 0. {
             self.shoot(shoot_direction);
