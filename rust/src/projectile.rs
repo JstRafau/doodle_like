@@ -33,9 +33,7 @@ impl Projectile {
         if body.is_in_group("enemy".into()) {
             body.queue_free();
         }
-        if !body.is_in_group("player".into()) {
-            self.base.queue_free();
-        }
+        self.base.queue_free();
     }
 }
 
