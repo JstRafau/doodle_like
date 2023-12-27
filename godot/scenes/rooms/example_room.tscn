@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccv4tccib2khq"]
+[gd_scene load_steps=7 format=3 uid="uid://ccv4tccib2khq"]
 
 [ext_resource type="Texture2D" uid="uid://di1gop18qh8kj" path="res://assets/sprites/rooms/room_bg_grid_1a.png" id="1_b5uxs"]
 [ext_resource type="PackedScene" uid="uid://b00awsiu2y2e" path="res://scenes/characters/bob.tscn" id="2_j16s0"]
 [ext_resource type="TileSet" uid="uid://d1omb350828q2" path="res://assets/sprites/rooms/room.tres" id="3_4n6vx"]
 [ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="4_h0ahd"]
+[ext_resource type="PackedScene" uid="uid://bt54pce0ecafq" path="res://scenes/projectile.tscn" id="5_xlyfx"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_a3mjm"]
 normal = Vector2(0, 1)
@@ -21,6 +22,7 @@ z_index = -10
 texture = ExtResource("1_b5uxs")
 
 [node name="Bob" parent="." instance=ExtResource("2_j16s0")]
+collision_priority = 2.0
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(40, 0)
@@ -31,3 +33,9 @@ layer_0/tile_data = PackedInt32Array(262144, 0, 0, 327679, 0, 0, 327678, 0, 0, 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -350)
 shape = SubResource("WorldBoundaryShape2D_a3mjm")
+
+[node name="Projectile" parent="." instance=ExtResource("5_xlyfx")]
+position = Vector2(-500, -160)
+collision_layer = 6
+collision_mask = 6
+metadata/hostile = true

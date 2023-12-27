@@ -6,7 +6,6 @@ use godot::{
         CollisionShape2D,
         CharacterBody2D,
         ICharacterBody2D,
-        PhysicsBody2D,
     },
 };
 
@@ -15,7 +14,7 @@ use godot::{
 #[class(base=CharacterBody2D)]
 pub struct PlayerCharacter {
     pub name: String,
-    pub hit_points: u8,
+    pub hit_points: (u8, f64),
     pub speed: real,
     pub damage: f64,
     #[base]
@@ -25,12 +24,6 @@ pub struct PlayerCharacter {
 
 #[godot_api]
 impl PlayerCharacter {
-    #[func]
-    fn on_player_body_entered(&mut self, _body: Gd<PhysicsBody2D>) {
-        let mut collision_shape = self.base
-            .get_node_as::<CollisionShape2D>("CollisionShape2D");
-        collision_shape.set_deferred("disabled".into(), true.to_variant());
-    }
     
     #[func]
     pub fn start(&mut self) {
@@ -44,14 +37,93 @@ impl PlayerCharacter {
     }
 
     #[func]
-    fn shoot(&mut self, shoot_direction: Vector2) {
+    fn on_player_body_entered(&mut self, body: Gd<Node2D>) {
+        if body.is_in_group("player".into()) {
+            return;
+        }
+
+        let mut projectile_hit_shape = self.base
+            .get_node_as::<CollisionShape2D>("ProjectileHitDetector/ProjectileCollisionShape2D");
+        let mut physical_hit_shape = self.base
+            .get_node_as::<CollisionShape2D>("PhysicalHitDetector/PhysicalCollisionShape2D");
+
+
+        godot_warn!("Ouchie!");
+
+        self.hit_points.0 -= 1;
+
+        if self.hit_points.0 == 0 {
+            godot_error!("No moar hp!!!");
+            self.update_sprite("died".into(), false);
+            //,______________________________,
+            //|           yuo dead           |
+            //|      display some stats      |
+            //|                              |
+            //|      [restart_game_btn]      |
+            //|      [back_to_menu_btn]      |
+            //|______________________________|
+        }
+
+        physical_hit_shape.set_deferred("disabled".into(), true.to_variant());
+        projectile_hit_shape.set_deferred("disabled".into(), true.to_variant());
+        self.hit_points.1 = 0.;
+    }
+
+    #[func]
+    fn update_hp_timeout(&mut self, delta: f64) {
+        if self.hit_points.1 >= 1. {
+            return;
+        } 
+        
+        self.hit_points.1 = if (self.hit_points.1 + delta) < 1. {
+            self.hit_points.1 + delta
+        } else {
+            self.base
+                .get_node_as::<CollisionShape2D>("ProjectileHitDetector/ProjectileCollisionShape2D")
+                .set_deferred("disabled".into(), false.to_variant());
+            self.base
+                .get_node_as::<CollisionShape2D>("PhysicalHitDetector/PhysicalCollisionShape2D")
+                .set_deferred("disabled".into(), false.to_variant());
+            // no semicolon means that if statement returns 1.0
+            1.
+        };
+    }
+
+    #[func]
+    fn shoot(&mut self, mut shoot_direction: Vector2) {
         let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
         bullet_scene.set_position(self.base.get_position());
+
+        shoot_direction += self.get_normalized_movement_vector() * 0.6;
 
         bullet_scene.set_global_rotation(shoot_direction.angle());
         let mut owner = self.base.get_owner().unwrap();
         owner.add_child(bullet_scene.clone().upcast());
+    }
 
+    #[func]
+    fn get_normalized_movement_vector(&mut self) -> Vector2 {
+        let input_dir: Vector2 = Input::singleton().get_vector(
+            "mv_left".into(),
+            "mv_right".into(),
+            "mv_up".into(),
+            "mv_down".into(),
+        );
+
+        input_dir.normalized()
+    }
+
+    #[func]
+    fn update_sprite(&mut self, animation: StringName, flip: bool) {
+        let mut animated_sprite = self
+            .base
+            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
+        match animation.to_string().as_str() {
+            "stand" => animated_sprite.stop(),
+            _ => (),
+        }
+        animated_sprite.play_ex().name(animation.into()).done();
+        animated_sprite.set_flip_h(flip);
     }
 }
 
@@ -60,7 +132,7 @@ impl ICharacterBody2D for PlayerCharacter {
     fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
             name: String::from("Placeholder_Name"), 
-            hit_points: 1,
+            hit_points: (1, 1.),
             speed: 350.,
             damage: 10.,
             base,
@@ -69,22 +141,18 @@ impl ICharacterBody2D for PlayerCharacter {
     }
 
     fn ready(&mut self) {
+        //self.hit_points.0 
+        let hp = self.base.get_meta("hp".into());
+        self.hit_points.0 = hp.to(); 
         self.bullet = load("res://scenes/projectile.tscn");
         godot_print!("{}", self.name);
     }
 
     fn physics_process(&mut self, _delta: f64) {
-        let input_dir: Vector2 = Input::singleton().get_vector(
-            "mv_left".into(),
-            "mv_right".into(),
-            "mv_up".into(),
-            "mv_down".into(),
-        );
-        let velocity = input_dir.normalized() * self.speed;
-
-        let mut animated_sprite = self
-            .base
-            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
+        if self.hit_points.0 == 0 {
+            return;
+        }
+        let velocity = self.get_normalized_movement_vector() * self.speed;
         let mut audio_walk = self.base.get_node_as::<AudioStreamPlayer>("WalkAudio");
         audio_walk.set_bus("aaa".into());
         let playing = audio_walk.is_playing();
@@ -97,27 +165,32 @@ impl ICharacterBody2D for PlayerCharacter {
             self.base.set_velocity(velocity);
             self.base.move_and_slide();
 
-            let animation;
+            let animation: &str;
+            let mut flip: bool = false;
 
             if velocity.y < 0. {
                 animation = "walk_up";
-                animated_sprite.set_flip_h(velocity.x > 0.0);
+                flip = velocity.x > 0.0;
             } else if velocity.x != 0. || velocity.y > 0. {
                 animation = "walk";
-                animated_sprite.set_flip_h(velocity.x > 0.0);
+                flip = velocity.x > 0.0;
             } else {
                 animation = "stand";
             }
 
-            animated_sprite.play_ex().name(animation.into()).done();
+            self.update_sprite(animation.into(), flip);
         } else {
-            animated_sprite.play_ex().name("stand".into()).done();
+            self.update_sprite("stand".into(), false);
             audio_walk.stop();
-            animated_sprite.stop();
         }
     }
     
-    fn process(&mut self, _delta: f64) {
+    fn process(&mut self, delta: f64) {
+        if self.hit_points.0 == 0 {
+            return;
+        }
+        self.update_hp_timeout(delta);
+
         let mut shoot: bool = false; 
         for i in ["aim_left", "aim_right", "aim_up", "aim_down"] {
             if Input::singleton().is_action_just_pressed(i.into()) {

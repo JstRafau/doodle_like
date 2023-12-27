@@ -30,7 +30,9 @@ impl Projectile {
     }
     #[func]
     fn on_bullet_body_entered(&mut self, mut body: Gd<Node2D>) {
-        if body.is_in_group("enemy".into()) {
+        let hostile_source = self.base.get_meta("hostile".into());
+        let idk_how_to_compare_it_and_it_will_be_replaced_anyway: Variant = true.to_variant();
+        if hostile_source.ne(&idk_how_to_compare_it_and_it_will_be_replaced_anyway) && body.is_in_group("enemy".into()) {
             body.queue_free();
         }
         self.base.queue_free();

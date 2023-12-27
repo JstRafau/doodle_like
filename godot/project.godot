@@ -89,6 +89,8 @@ exit={
 
 2d_physics/layer_1="movement"
 2d_physics/layer_2="projectiles"
+2d_physics/layer_3="hostile_projectiles"
+2d_physics/layer_4="hostile_physical"
 
 [physics]
 
