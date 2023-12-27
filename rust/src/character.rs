@@ -211,6 +211,7 @@ impl ICharacterBody2D for PlayerCharacter {
                 godot_print!("-> {}", current_velocity);
                 self.base.set_velocity(current_velocity
                     .move_toward(Vector2::ZERO, delta as f32 * self.speed * 12.));
+                self.base.move_and_slide();
                 return;
             }
             self.update_sprite("stand".into(), false);
