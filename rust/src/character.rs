@@ -49,11 +49,13 @@ impl PlayerCharacter {
 
 
         godot_warn!("Ouchie!");
+        self.change_color_on_damage(1., 0.69, 0.69);
 
         self.hit_points.0 -= 1;
 
         if self.hit_points.0 == 0 {
             godot_error!("No moar hp!!!");
+            self.change_color_on_damage(1., 0.95, 0.95);
             self.update_sprite("died".into(), false);
             //,______________________________,
             //|           yuo dead           |
@@ -74,6 +76,18 @@ impl PlayerCharacter {
         if self.hit_points.1 >= 1. {
             return;
         } 
+
+        let sprite_modulation = self.base
+            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody")
+            .get_modulate();
+
+        if sprite_modulation.g < 1. {
+            self.change_color_on_damage(
+                1.,
+                sprite_modulation.g + 0.005,
+                sprite_modulation.b + 0.005
+            );
+        }
         
         self.hit_points.1 = if (self.hit_points.1 + delta) < 1. {
             self.hit_points.1 + delta
@@ -124,6 +138,14 @@ impl PlayerCharacter {
         }
         animated_sprite.play_ex().name(animation.into()).done();
         animated_sprite.set_flip_h(flip);
+    }
+
+    #[func]
+    fn change_color_on_damage(&mut self, r: f32, g: f32, b: f32) {
+        let mut animated_sprite = self
+            .base
+            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2DBody");
+        animated_sprite.set_modulate(Color::from_rgb(r, g, b));
     }
 }
 
