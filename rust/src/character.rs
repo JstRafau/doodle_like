@@ -170,11 +170,11 @@ impl ICharacterBody2D for PlayerCharacter {
         godot_print!("{}", self.name);
     }
 
-    fn physics_process(&mut self, _delta: f64) {
+    fn physics_process(&mut self, delta: f64) {
         if self.hit_points.0 == 0 {
             return;
         }
-        let velocity = self.get_normalized_movement_vector() * self.speed;
+        let velocity = self.get_normalized_movement_vector();
         let mut audio_walk = self.base.get_node_as::<AudioStreamPlayer>("WalkAudio");
         audio_walk.set_bus("aaa".into());
         let playing = audio_walk.is_playing();
@@ -184,7 +184,11 @@ impl ICharacterBody2D for PlayerCharacter {
                 audio_walk.play();
             }
 
-            self.base.set_velocity(velocity);
+            let current_velocity = self.base
+                .get_velocity()
+                .move_toward(velocity * self.speed, delta as f32 * self.speed * 13.);
+            godot_print!("{}", current_velocity);
+            self.base.set_velocity(current_velocity);
             self.base.move_and_slide();
 
             let animation: &str;
@@ -202,6 +206,7 @@ impl ICharacterBody2D for PlayerCharacter {
 
             self.update_sprite(animation.into(), flip);
         } else {
+            self.base.set_velocity(Vector2::ZERO);
             self.update_sprite("stand".into(), false);
             audio_walk.stop();
         }
