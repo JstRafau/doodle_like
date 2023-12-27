@@ -174,19 +174,19 @@ impl ICharacterBody2D for PlayerCharacter {
         if self.hit_points.0 == 0 {
             return;
         }
-        let velocity = self.get_normalized_movement_vector();
+        let input_velocity = self.get_normalized_movement_vector();
         let mut audio_walk = self.base.get_node_as::<AudioStreamPlayer>("WalkAudio");
         audio_walk.set_bus("aaa".into());
         let playing = audio_walk.is_playing();
 
-        if velocity.length() > 0.0 {
+        if input_velocity.length() > 0.0 {
             if !playing {
                 audio_walk.play();
             }
 
             let current_velocity = self.base
                 .get_velocity()
-                .move_toward(velocity * self.speed, delta as f32 * self.speed * 13.);
+                .move_toward(input_velocity * self.speed, delta as f32 * self.speed * 12.);
             godot_print!("{}", current_velocity);
             self.base.set_velocity(current_velocity);
             self.base.move_and_slide();
@@ -194,19 +194,25 @@ impl ICharacterBody2D for PlayerCharacter {
             let animation: &str;
             let mut flip: bool = false;
 
-            if velocity.y < 0. {
+            if input_velocity.y < 0. {
                 animation = "walk_up";
-                flip = velocity.x > 0.0;
-            } else if velocity.x != 0. || velocity.y > 0. {
+                flip = input_velocity.x > 0.0;
+            } else if input_velocity.x != 0. || input_velocity.y > 0. {
                 animation = "walk";
-                flip = velocity.x > 0.0;
+                flip = input_velocity.x > 0.0;
             } else {
                 animation = "stand";
             }
 
             self.update_sprite(animation.into(), flip);
         } else {
-            self.base.set_velocity(Vector2::ZERO);
+            let current_velocity = self.base.get_velocity();
+            if current_velocity.length() > 0. {
+                godot_print!("-> {}", current_velocity);
+                self.base.set_velocity(current_velocity
+                    .move_toward(Vector2::ZERO, delta as f32 * self.speed * 12.));
+                return;
+            }
             self.update_sprite("stand".into(), false);
             audio_walk.stop();
         }
