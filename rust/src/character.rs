@@ -24,7 +24,6 @@ pub struct PlayerCharacter {
 
 #[godot_api]
 impl PlayerCharacter {
-    
     #[func]
     pub fn start(&mut self) {
         self.base.show();
@@ -48,15 +47,21 @@ impl PlayerCharacter {
             .get_node_as::<CollisionShape2D>("PhysicalHitDetector/PhysicalCollisionShape2D");
 
 
-        godot_warn!("Ouchie!");
         self.change_color_on_damage(1., 0.69, 0.69);
 
         self.hit_points.0 -= 1;
 
         if self.hit_points.0 == 0 {
-            godot_error!("No moar hp!!!");
             self.change_color_on_damage(1., 0.95, 0.95);
             self.update_sprite("died".into(), false);
+            self.base
+                .get_tree()
+                .unwrap()
+                .call_group(
+                    "run".into(),
+                    "player_died".into(),
+                    &[self.name.to_variant()]
+                );
             //,______________________________,
             //|           yuo dead           |
             //|      display some stats      |
@@ -163,10 +168,9 @@ impl ICharacterBody2D for PlayerCharacter {
     }
 
     fn ready(&mut self) {
-        //self.hit_points.0 
-        let hp = self.base.get_meta("hp".into());
-        self.hit_points.0 = hp.to(); 
+        self.hit_points.0 = self.base.get_meta("hp".into()).to(); 
         self.bullet = load("res://scenes/projectile.tscn");
+        self.name = self.base.get_meta("name".into()).to();
         godot_print!("{}", self.name);
     }
 
@@ -187,7 +191,6 @@ impl ICharacterBody2D for PlayerCharacter {
             let current_velocity = self.base
                 .get_velocity()
                 .move_toward(input_velocity * self.speed, delta as f32 * self.speed * 12.);
-            godot_print!("{}", current_velocity);
             self.base.set_velocity(current_velocity);
             self.base.move_and_slide();
 
@@ -208,7 +211,6 @@ impl ICharacterBody2D for PlayerCharacter {
         } else {
             let current_velocity = self.base.get_velocity();
             if current_velocity.length() > 0. {
-                godot_print!("-> {}", current_velocity);
                 self.base.set_velocity(current_velocity
                     .move_toward(Vector2::ZERO, delta as f32 * self.speed * 12.));
                 self.base.move_and_slide();
@@ -221,6 +223,7 @@ impl ICharacterBody2D for PlayerCharacter {
     
     fn process(&mut self, delta: f64) {
         if self.hit_points.0 == 0 {
+            godot_print!(":skull_emoji:");
             return;
         }
         self.update_hp_timeout(delta);

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cre0yder86f0e"
-path="res://.godot/imported/continue_disabled.png-a0f854c5dc55d62a1ce9b34b1eff13a1.ctex"
+uid="uid://dwx6f2stt4nlk"
+path="res://.godot/imported/game_over_bg_temp.png-8bf8bae7e3aa4e7da7d46002d52abe02.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/menu/btns/continue_disabled.png"
-dest_files=["res://.godot/imported/continue_disabled.png-a0f854c5dc55d62a1ce9b34b1eff13a1.ctex"]
+source_file="res://assets/sprites/gui/game_over/game_over_bg_temp.png"
+dest_files=["res://.godot/imported/game_over_bg_temp.png-8bf8bae7e3aa4e7da7d46002d52abe02.ctex"]
 
 [params]
 

@@ -13,7 +13,7 @@ impl ExampleRoom {
     #[func]
     pub fn new_game(&mut self) {
         let mut player = self.base.get_node_as
-            ::<crate::character::PlayerCharacter>("Bob");
+            ::<crate::character::PlayerCharacter>("Character");
 
         player.bind_mut().start();
     }

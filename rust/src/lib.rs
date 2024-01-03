@@ -6,6 +6,7 @@ use godot::{
 pub mod character;
 pub mod rooms;
 pub mod projectile;
+pub mod run;
 
 struct DoodleLikeRs;
 

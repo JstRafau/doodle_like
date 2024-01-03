@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbw4bk3bkwogj"
-path="res://.godot/imported/title_text_atlas.png-45dc28bf6bb20c4727957494fab6c16b.ctex"
+uid="uid://dv6lsuwjdc85d"
+path="res://.godot/imported/new_game_hover.png-02ac7fbd3eeec24859522a4b7d73987f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/menu/title_text_atlas.png"
-dest_files=["res://.godot/imported/title_text_atlas.png-45dc28bf6bb20c4727957494fab6c16b.ctex"]
+source_file="res://assets/sprites/gui/menu/btns/new_game_hover.png"
+dest_files=["res://.godot/imported/new_game_hover.png-02ac7fbd3eeec24859522a4b7d73987f.ctex"]
 
 [params]
 
