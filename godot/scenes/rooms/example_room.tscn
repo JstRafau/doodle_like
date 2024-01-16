@@ -14,7 +14,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="enemy" parent="." instance=ExtResource("4_h0ahd")]
-position = Vector2(340, 50)
+position = Vector2(522, 50)
 mass = 0.35
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

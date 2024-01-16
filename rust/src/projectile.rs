@@ -7,6 +7,8 @@ use godot::{
     },
 };
 
+use crate::DEFAULTS;
+
 
 #[derive(GodotClass)]
 #[class(base=Area2D)]
@@ -44,7 +46,7 @@ impl Projectile {
 impl IArea2D for Projectile {
     fn init(base: Base<Area2D>) -> Self {
         Self {
-            speed: 600.,
+            speed: DEFAULTS.speed,
             damage: 10.,
             base
         }
@@ -52,6 +54,8 @@ impl IArea2D for Projectile {
 
     fn ready(&mut self) {
         self.set_collision();
+        let speed: f32 = self.base.get_meta("speed".into()).to();
+        self.speed *= speed;
     }
 
     fn physics_process(&mut self, delta: f64) {

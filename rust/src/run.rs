@@ -1,8 +1,9 @@
 use godot::{
     prelude::*,
     engine::{
+        Control,
         Node2D,
-        INode2D, Control,
+        INode2D,
     },
 };
 

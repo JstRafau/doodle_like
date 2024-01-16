@@ -9,6 +9,8 @@ use godot::{
     },
 };
 
+use crate::DEFAULTS;
+
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
@@ -113,7 +115,7 @@ impl PlayerCharacter {
         let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
         bullet_scene.set_position(self.base.get_position());
 
-        shoot_direction += self.get_normalized_movement_vector() * 0.6;
+        shoot_direction += self.get_normalized_movement_vector() * 0.3;
 
         bullet_scene.set_global_rotation(shoot_direction.angle());
         let mut owner = self.base.get_owner().unwrap();
@@ -160,7 +162,7 @@ impl ICharacterBody2D for PlayerCharacter {
         Self {
             name: String::from("Placeholder_Name"), 
             hit_points: (1, 1.),
-            speed: 350.,
+            speed: DEFAULTS.speed,
             damage: 10.,
             base,
             bullet: PackedScene::new(),
@@ -168,9 +170,13 @@ impl ICharacterBody2D for PlayerCharacter {
     }
 
     fn ready(&mut self) {
-        self.hit_points.0 = self.base.get_meta("hp".into()).to(); 
-        self.bullet = load("res://scenes/projectile.tscn");
         self.name = self.base.get_meta("name".into()).to();
+        self.hit_points.0 = self.base.get_meta("hp".into()).to(); 
+        self.damage = self.base.get_meta("damage".into()).to(); 
+        let speed: f32 = self.base.get_meta("speed".into()).to(); 
+        self.speed *= speed;
+
+        self.bullet = load("res://scenes/projectile.tscn");
         godot_print!("{}", self.name);
     }
 

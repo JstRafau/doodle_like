@@ -14,3 +14,16 @@ struct DoodleLikeRs;
 unsafe impl ExtensionLibrary for DoodleLikeRs {
 }
 
+pub struct Defaults {
+    pub speed: f32,
+}
+impl Defaults {
+    pub const fn new() -> Self {
+        Self {
+            speed: 350.,
+        }
+    }
+}
+
+const DEFAULTS: Defaults = Defaults::new();
+
