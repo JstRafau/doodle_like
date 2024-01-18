@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccv4tccib2khq"]
+[gd_scene load_steps=8 format=3 uid="uid://ccv4tccib2khq"]
 
 [ext_resource type="Texture2D" uid="uid://di1gop18qh8kj" path="res://assets/sprites/rooms/room_bg_grid_1a.png" id="1_b5uxs"]
 [ext_resource type="PackedScene" uid="uid://b00awsiu2y2e" path="res://scenes/characters/bob.tscn" id="2_j16s0"]
 [ext_resource type="TileSet" uid="uid://d1omb350828q2" path="res://assets/sprites/rooms/room.tres" id="3_4n6vx"]
 [ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="4_h0ahd"]
 [ext_resource type="PackedScene" uid="uid://bt54pce0ecafq" path="res://scenes/projectile.tscn" id="5_xlyfx"]
+[ext_resource type="PackedScene" uid="uid://bu4l3ovfoobfv" path="res://enemy_2_integral.tscn" id="6_nopu7"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_a3mjm"]
 normal = Vector2(0, 1)
@@ -39,3 +40,6 @@ position = Vector2(-500, -160)
 collision_layer = 6
 collision_mask = 6
 metadata/hostile = true
+
+[node name="Enemy2Integral" parent="." instance=ExtResource("6_nopu7")]
+position = Vector2(321, 260)
