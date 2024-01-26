@@ -1,11 +1,11 @@
-use godot::{prelude::*, engine::{IStaticBody2D, StaticBody2D}};
+use godot::{prelude::*, engine::{INode2D, Node2D}};
 
 
 #[derive(GodotClass)]
-#[class(base=StaticBody2D)]
+#[class(base=Node2D)]
 struct ExampleRoom {
     #[base]
-    base: Base<StaticBody2D>
+    base: Base<Node2D>
 }
 
 #[godot_api]
@@ -19,8 +19,8 @@ impl ExampleRoom {
     }
 }
 #[godot_api]
-impl IStaticBody2D for ExampleRoom {
-    fn init(base: Base<StaticBody2D>) -> Self {
+impl INode2D for ExampleRoom {
+    fn init(base: Base<Node2D>) -> Self {
         Self {
             base
         }

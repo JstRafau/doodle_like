@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv456qoie2yjt"]
+
+[ext_resource type="Texture2D" uid="uid://b8l21cgmksxgs" path="res://assets/sprites/gui/run_ui/heart_atlas.png" id="1_hrj5b"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dba5t"]
+resource_name = "hp"
+texture = ExtResource("1_hrj5b")
+texture_region_size = Vector2i(70, 70)
+use_texture_padding = false
+0:1/0 = 0
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_eh1f4"]
+tile_size = Vector2i(70, 70)
+sources/1 = SubResource("TileSetAtlasSource_dba5t")
+
+[node name="Run_UI" type="Node2D"]
+
+[node name="TileMap2" type="TileMap" parent="."]
+position = Vector2(40, 40)
+scale = Vector2(0.6, 0.6)
+tile_set = SubResource("TileSet_eh1f4")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 1, 4, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
