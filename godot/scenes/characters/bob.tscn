@@ -97,15 +97,15 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kn88t"]
 radius = 20.0
-height = 50.0
+height = 40.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_luhrl"]
 radius = 21.0
 height = 51.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1talj"]
-radius = 21.0
-height = 51.0
+radius = 20.5
+height = 41.0
 
 [node name="Bob" type="PlayerCharacter" groups=["player"]]
 collision_layer = 5
@@ -123,7 +123,7 @@ sprite_frames = SubResource("SpriteFrames_wtjkr")
 animation = &"stand"
 
 [node name="MovementCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 15)
+position = Vector2(0, 20)
 shape = SubResource("CapsuleShape2D_kn88t")
 debug_color = Color(0, 0.458824, 0.835294, 0.258824)
 
@@ -145,6 +145,7 @@ collision_priority = 2.0
 [node name="ProjectileCollisionShape2D" type="CollisionShape2D" parent="ProjectileHitDetector"]
 position = Vector2(0, 15)
 shape = SubResource("CapsuleShape2D_luhrl")
+debug_color = Color(0.964706, 0, 0.490196, 0.0627451)
 
 [node name="PhysicalHitDetector" type="Area2D" parent="."]
 collision_layer = 8
@@ -152,8 +153,9 @@ collision_mask = 8
 collision_priority = 2.0
 
 [node name="PhysicalCollisionShape2D" type="CollisionShape2D" parent="PhysicalHitDetector"]
-position = Vector2(0, 15)
+position = Vector2(0, 20)
 shape = SubResource("CapsuleShape2D_1talj")
+debug_color = Color(0.941176, 0, 0.607843, 0.117647)
 
 [connection signal="area_entered" from="ProjectileHitDetector" to="." method="on_player_body_entered"]
 [connection signal="body_entered" from="PhysicalHitDetector" to="." method="on_player_body_entered"]

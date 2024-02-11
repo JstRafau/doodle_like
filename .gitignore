@@ -15,6 +15,7 @@ rust/debug
 
 # User (me) added ignores
 .do_not_share/
+rust/src/run_ui.rs
 
 # IDK what is this
 .direnv

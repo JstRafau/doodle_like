@@ -7,6 +7,7 @@ pub mod character;
 pub mod rooms;
 pub mod projectile;
 pub mod run;
+pub mod run_ui;
 
 struct DoodleLikeRs;
 
