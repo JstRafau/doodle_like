@@ -16,7 +16,7 @@ use crate::DEFAULTS;
 #[class(base=CharacterBody2D)]
 pub struct PlayerCharacter {
     pub name: String,
-    pub hit_points: (u8, f64),
+    pub hit_points: (u8, u8, f64),
     pub speed: real,
     pub damage: f64,
     #[base]
@@ -26,6 +26,11 @@ pub struct PlayerCharacter {
 
 #[godot_api]
 impl PlayerCharacter {
+    // signals
+    #[signal]
+    fn hit();
+
+    // functions
     #[func]
     pub fn start(&mut self) {
         self.base.show();
@@ -53,6 +58,18 @@ impl PlayerCharacter {
 
         self.hit_points.0 -= 1;
 
+        /*
+        self.base.emit_signal(
+            "hit".into(),
+            &[self.hit_points.0.to_variant(), self.hit_points.1.to_variant()]
+        );
+        */
+        self.base.get_tree().unwrap()
+            .call_group("hud".into(), "update_hp".into(),&[
+                self.hit_points.0.to_variant(),
+                self.hit_points.1.to_variant()
+            ]); 
+
         if self.hit_points.0 == 0 {
             self.change_color_on_damage(1., 0.95, 0.95);
             self.update_sprite("died".into(), false);
@@ -75,12 +92,12 @@ impl PlayerCharacter {
 
         physical_hit_shape.set_deferred("disabled".into(), true.to_variant());
         projectile_hit_shape.set_deferred("disabled".into(), true.to_variant());
-        self.hit_points.1 = 0.;
+        self.hit_points.2 = 0.;
     }
 
     #[func]
     fn update_hp_timeout(&mut self, delta: f64) {
-        if self.hit_points.1 >= 1. {
+        if self.hit_points.2 >= 1. {
             return;
         } 
 
@@ -91,13 +108,13 @@ impl PlayerCharacter {
         if sprite_modulation.g < 1. {
             self.change_color_on_damage(
                 1.,
-                sprite_modulation.g + 0.005,
-                sprite_modulation.b + 0.005
+                sprite_modulation.g + delta as f32,
+                sprite_modulation.b + delta as f32
             );
         }
         
-        self.hit_points.1 = if (self.hit_points.1 + delta) < 1. {
-            self.hit_points.1 + delta
+        self.hit_points.2 = if (self.hit_points.2 + delta) < 1. {
+            self.hit_points.2 + delta
         } else {
             self.base
                 .get_node_as::<CollisionShape2D>("ProjectileHitDetector/ProjectileCollisionShape2D")
@@ -161,7 +178,7 @@ impl ICharacterBody2D for PlayerCharacter {
     fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
             name: String::from("Placeholder_Name"), 
-            hit_points: (1, 1.),
+            hit_points: (1, 1, 1.),
             speed: DEFAULTS.speed,
             damage: 10.,
             base,
@@ -172,6 +189,7 @@ impl ICharacterBody2D for PlayerCharacter {
     fn ready(&mut self) {
         self.name = self.base.get_meta("name".into()).to();
         self.hit_points.0 = self.base.get_meta("hp".into()).to(); 
+        self.hit_points.1 = self.base.get_meta("hp".into()).to(); 
         self.damage = self.base.get_meta("damage".into()).to(); 
         let speed: f32 = self.base.get_meta("speed".into()).to(); 
         self.speed *= speed;

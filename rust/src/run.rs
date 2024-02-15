@@ -4,8 +4,11 @@ use godot::{
         Control,
         Node2D,
         INode2D,
+        TileMap,
     },
 };
+
+use crate::character::PlayerCharacter;
 
 
 #[derive(GodotClass)]
@@ -18,10 +21,17 @@ pub struct Run {
 
 #[godot_api]
 impl Run {
+    /*
+    #[func]
+    fn on_new_game_start(&self) {
+        let hud_hp = self.base.get_node_as::<TileMap>("HUD/TileMap");
+        let mut player = self.base.get_node_as::<PlayerCharacter>("Bob");
+        player.connect("hit".into(), hud_hp.callable("update_hp"));
+    }
+    */
+
     #[func]
     fn player_died(&mut self) {
-        godot_print!("eough");
-        // error 
         let mut game_over_scene = self.game_over.instantiate_as::<Control>();
         let viewport = self.base.get_viewport_rect();
         let position = Vector2::new(viewport.size.x / 2., viewport.size.y / 2.);
