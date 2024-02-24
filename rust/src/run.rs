@@ -4,11 +4,9 @@ use godot::{
         Control,
         Node2D,
         INode2D,
-        TileMap,
     },
 };
 
-use crate::character::PlayerCharacter;
 
 
 #[derive(GodotClass)]
@@ -59,6 +57,6 @@ impl INode2D for Run {
         self.game_over = load("res://scenes/gui/game_over/game_over.tscn");
     }
 
-    fn process(&mut self, _delta: f64) {}
+    // fn process(&mut self, _delta: f64) {}
 }
 

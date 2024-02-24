@@ -6,7 +6,7 @@
 [node name="HUD" type="Node2D"]
 
 [node name="HpTileMap" type="TileMap" parent="." groups=["hud"]]
-position = Vector2(40, 40)
+position = Vector2(5, 5)
 scale = Vector2(0.6, 0.6)
 tile_set = ExtResource("1_3prxc")
 format = 2
