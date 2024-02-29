@@ -15,19 +15,11 @@ pub struct Run {
     game_over: Gd<PackedScene>,
     #[base]
     base: Base<Node2D>,
+    character: Gd<PackedScene>,
 }
 
 #[godot_api]
 impl Run {
-    /*
-    #[func]
-    fn on_new_game_start(&self) {
-        let hud_hp = self.base.get_node_as::<TileMap>("HUD/TileMap");
-        let mut player = self.base.get_node_as::<PlayerCharacter>("Bob");
-        player.connect("hit".into(), hud_hp.callable("update_hp"));
-    }
-    */
-
     #[func]
     fn player_died(&mut self) {
         let mut game_over_scene = self.game_over.instantiate_as::<Control>();
@@ -51,6 +43,7 @@ impl INode2D for Run {
         Self {
             game_over: PackedScene::new(),
             base, 
+            character: PackedScene::new(),
         }
     }
     fn ready(&mut self) {

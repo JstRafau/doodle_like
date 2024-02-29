@@ -1,0 +1,191 @@
+[gd_scene load_steps=26 format=3 uid="uid://cd8tnrtxb2kdm"]
+
+[ext_resource type="Texture2D" uid="uid://d2tt55yf83rtc" path="res://assets/sprites/characters/juno/ded.png" id="1_x6it5"]
+[ext_resource type="Texture2D" uid="uid://miptmyga5vh" path="res://assets/sprites/characters/juno/staaa.png" id="2_gp2ci"]
+[ext_resource type="Texture2D" uid="uid://cjaaijw7e6vk7" path="res://assets/sprites/characters/juno/wa.png" id="3_1ycgg"]
+[ext_resource type="Texture2D" uid="uid://dsln5j7hqoknv" path="res://assets/sprites/characters/juno/waaa.png" id="4_ld3ay"]
+[ext_resource type="Texture2D" uid="uid://bmyt2760ntn8v" path="res://assets/sprites/characters/juno/wa_up.png" id="5_iivye"]
+[ext_resource type="Texture2D" uid="uid://dt1xcfvhxubdo" path="res://assets/sprites/characters/juno/waaa_up.png" id="6_2y7dj"]
+[ext_resource type="Texture2D" uid="uid://bc6msaxym10es" path="res://assets/sprites/characters/juno/staaa_up.png" id="7_pvdn3"]
+[ext_resource type="Texture2D" uid="uid://c8se6bt8qk4tx" path="res://assets/sprites/characters/shadow.png" id="8_bjrkf"]
+[ext_resource type="AudioStream" uid="uid://ccue60h8b58fe" path="res://assets/audio/characters/step_60.ogg" id="9_f100y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4hw2"]
+atlas = ExtResource("1_x6it5")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jj1e8"]
+atlas = ExtResource("1_x6it5")
+region = Rect2(60, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36r5c"]
+atlas = ExtResource("1_x6it5")
+region = Rect2(120, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8jbr"]
+atlas = ExtResource("1_x6it5")
+region = Rect2(180, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3407"]
+atlas = ExtResource("1_x6it5")
+region = Rect2(240, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xi0qg"]
+atlas = ExtResource("2_gp2ci")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxvw7"]
+atlas = ExtResource("3_1ycgg")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c2oj"]
+atlas = ExtResource("4_ld3ay")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho3kh"]
+atlas = ExtResource("2_gp2ci")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui7yr"]
+atlas = ExtResource("5_iivye")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx2an"]
+atlas = ExtResource("6_2y7dj")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66fwa"]
+atlas = ExtResource("7_pvdn3")
+region = Rect2(0, 0, 60, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wtjkr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4hw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jj1e8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36r5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8jbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3407")
+}],
+"loop": false,
+"name": &"died",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xi0qg")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxvw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1c2oj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxvw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho3kh")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui7yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx2an")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui7yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66fwa")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kn88t"]
+radius = 10.5
+height = 45.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_luhrl"]
+radius = 21.0
+height = 51.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1talj"]
+radius = 11.0
+height = 46.0
+
+[node name="Juno" type="PlayerCharacter" groups=["player"]]
+collision_layer = 5
+collision_mask = 5
+metadata/hp = 4
+metadata/name = "Juno"
+metadata/damage = 14.0
+metadata/speed = 0.9
+
+[node name="AnimatedSprite2DBody" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+z_index = 10
+z_as_relative = false
+sprite_frames = SubResource("SpriteFrames_wtjkr")
+animation = &"stand"
+
+[node name="MovementCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 36)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_kn88t")
+debug_color = Color(0, 0.458824, 0.835294, 0.258824)
+
+[node name="Sprite2DShadow" type="Sprite2D" parent="."]
+position = Vector2(0, 36)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("8_bjrkf")
+
+[node name="WalkAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_f100y")
+volume_db = -14.0
+max_polyphony = 3
+
+[node name="ProjectileHitDetector" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+collision_priority = 2.0
+
+[node name="ProjectileCollisionShape2D" type="CollisionShape2D" parent="ProjectileHitDetector"]
+position = Vector2(0, 15)
+shape = SubResource("CapsuleShape2D_luhrl")
+debug_color = Color(0.964706, 0, 0.490196, 0.0627451)
+
+[node name="PhysicalHitDetector" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+collision_priority = 2.0
+
+[node name="PhysicalCollisionShape2D" type="CollisionShape2D" parent="PhysicalHitDetector"]
+position = Vector2(0, 36)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1talj")
+debug_color = Color(0.941176, 0, 0.607843, 0.117647)
+
+[connection signal="area_entered" from="ProjectileHitDetector" to="." method="on_player_body_entered"]
+[connection signal="body_entered" from="PhysicalHitDetector" to="." method="on_player_body_entered"]

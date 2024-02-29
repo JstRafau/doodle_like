@@ -135,8 +135,9 @@ impl PlayerCharacter {
         shoot_direction += self.get_normalized_movement_vector() * 0.3;
 
         bullet_scene.set_global_rotation(shoot_direction.angle());
-        let mut owner = self.base.get_owner().unwrap();
-        owner.add_child(bullet_scene.clone().upcast());
+        let mut run = self.base.get_tree().unwrap()
+            .get_first_node_in_group("run".into()).unwrap();
+        run.add_child(bullet_scene.clone().upcast());
     }
 
     #[func]
@@ -193,6 +194,10 @@ impl ICharacterBody2D for PlayerCharacter {
         self.damage = self.base.get_meta("damage".into()).to(); 
         let speed: f32 = self.base.get_meta("speed".into()).to(); 
         self.speed *= speed;
+
+        let viewport = self.base.get_viewport_rect();
+        let position = Vector2::new(viewport.size.x / 2., viewport.size.y / 2.);
+        self.base.set_global_position(position);
 
         self.bullet = load("res://scenes/projectile.tscn");
         godot_print!("{}", self.name);

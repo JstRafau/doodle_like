@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://ce0jqm7a7wtam"]
+[gd_scene load_steps=19 format=3 uid="uid://ce0jqm7a7wtam"]
 
+[ext_resource type="Script" path="res://scenes/gui/main_menu/main_menu.gd" id="1_xolh0"]
 [ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/sprites/gui/menu/menu_background.png" id="1_xro8v"]
 [ext_resource type="Texture2D" uid="uid://dbw4bk3bkwogj" path="res://assets/sprites/gui/menu/title_text_atlas.png" id="2_wusqa"]
 [ext_resource type="Texture2D" uid="uid://ce7g27ssk7n0u" path="res://assets/sprites/gui/menu/btns/new_game.png" id="3_yj3e8"]
@@ -51,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xolh0")
 
 [node name="menu_background" type="Sprite2D" parent="."]
 z_index = -3

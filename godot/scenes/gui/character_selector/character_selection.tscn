@@ -1,0 +1,142 @@
+[gd_scene load_steps=7 format=3 uid="uid://d05cfyh4hko6t"]
+
+[ext_resource type="Texture2D" uid="uid://cg50gdfwbkj05" path="res://assets/sprites/characters/bob/staaa.png" id="1_awxa6"]
+[ext_resource type="Texture2D" uid="uid://ddud4whs2s6kr" path="res://assets/sprites/gui/menu/menu_background.png" id="2_3ibih"]
+[ext_resource type="Script" path="res://scenes/gui/character_selector/select_bob.gd" id="2_yni1a"]
+[ext_resource type="Script" path="res://scenes/gui/character_selector/select_juno.gd" id="3_2bsbu"]
+[ext_resource type="Texture2D" uid="uid://miptmyga5vh" path="res://assets/sprites/characters/juno/staaa.png" id="3_me6k5"]
+[ext_resource type="Script" path="res://scenes/gui/character_selector/back_to_menu.gd" id="3_qqcjl"]
+
+[node name="CharacterSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Character" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(1280, 500)
+layout_mode = 1
+offset_top = 110.0
+offset_right = 1280.0
+offset_bottom = 610.0
+alignment = 1
+
+[node name="Bob" type="Control" parent="Character"]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Character/Bob"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 67.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Bob"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Character" type="Control" parent="Character/Bob"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -181.0
+offset_right = 150.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Character/Bob/Character"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("1_awxa6")
+offset = Vector2(43, 52)
+
+[node name="SelectBob" type="Button" parent="Character/Bob"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "SELECT"
+script = ExtResource("2_yni1a")
+
+[node name="spacing" type="Control" parent="Character"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="Juno" type="Control" parent="Character"]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Character/Juno"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 67.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Juno
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Character" type="Control" parent="Character/Juno"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -181.0
+offset_right = 150.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Character/Juno/Character"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_me6k5")
+offset = Vector2(43, 52)
+
+[node name="SelectJuno" type="Button" parent="Character/Juno"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "SELECT"
+script = ExtResource("3_2bsbu")
+
+[node name="background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(640, 360)
+texture = ExtResource("2_3ibih")
+
+[node name="BackToMenu" type="Button" parent="."]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 160.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 28
+text = "Back
+"
+script = ExtResource("3_qqcjl")

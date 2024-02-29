@@ -15,8 +15,9 @@ unsafe impl ExtensionLibrary for DoodleLikeRs {
 }
 
 pub struct Defaults {
-    pub speed: f32,
+    pub speed: f32, 
 }
+
 impl Defaults {
     pub const fn new() -> Self {
         Self {

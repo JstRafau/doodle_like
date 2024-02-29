@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dysye7rw8llmx"
-path="res://.godot/imported/waaa.png-ad7e4960d075c0e0abc5964140d2b037.ctex"
+uid="uid://bc6msaxym10es"
+path="res://.godot/imported/staaa_up.png-4d029648644fcb016de2660265cf534a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/waaa.png"
-dest_files=["res://.godot/imported/waaa.png-ad7e4960d075c0e0abc5964140d2b037.ctex"]
+source_file="res://assets/sprites/characters/juno/staaa_up.png"
+dest_files=["res://.godot/imported/staaa_up.png-4d029648644fcb016de2660265cf534a.ctex"]
 
 [params]
 

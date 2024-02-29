@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi7jj8dbrl3b"
-path="res://.godot/imported/wa.png-3fe05b691d70878e604b6ea71c0e5b2b.ctex"
+uid="uid://gali1fk6w128"
+path="res://.godot/imported/ded.png-1e5e9db2064abeb14dd750ac9e7a2355.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/wa.png"
-dest_files=["res://.godot/imported/wa.png-3fe05b691d70878e604b6ea71c0e5b2b.ctex"]
+source_file="res://assets/sprites/characters/bob/ded.png"
+dest_files=["res://.godot/imported/ded.png-1e5e9db2064abeb14dd750ac9e7a2355.ctex"]
 
 [params]
 

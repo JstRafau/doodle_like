@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpp6ijakqo4j1"
-path="res://.godot/imported/icon.png-b6a7fb2db36edd3d95dc42f1dc8c1c5d.ctex"
+uid="uid://d2tt55yf83rtc"
+path="res://.godot/imported/ded.png-0b37251ecb7e6f17e389a4b3cc4652d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icon.png"
-dest_files=["res://.godot/imported/icon.png-b6a7fb2db36edd3d95dc42f1dc8c1c5d.ctex"]
+source_file="res://assets/sprites/characters/juno/ded.png"
+dest_files=["res://.godot/imported/ded.png-0b37251ecb7e6f17e389a4b3cc4652d0.ctex"]
 
 [params]
 
