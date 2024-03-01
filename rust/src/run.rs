@@ -15,7 +15,6 @@ pub struct Run {
     game_over: Gd<PackedScene>,
     #[base]
     base: Base<Node2D>,
-    character: Gd<PackedScene>,
 }
 
 #[godot_api]
@@ -43,7 +42,6 @@ impl INode2D for Run {
         Self {
             game_over: PackedScene::new(),
             base, 
-            character: PackedScene::new(),
         }
     }
     fn ready(&mut self) {

@@ -1,12 +1,14 @@
 use godot::{
-    prelude::*,
     engine::{
         AnimatedSprite2D,
         Area2D,
-        CollisionShape2D,
         CharacterBody2D,
         ICharacterBody2D,
+        CollisionShape2D,
+        NodeExt,
+        Timer,
     },
+    prelude::*,
 };
 
 use crate::DEFAULTS;
@@ -18,6 +20,7 @@ pub struct PlayerCharacter {
     pub name: String,
     pub hit_points: (u8, u8, f64),
     pub speed: real,
+    pub shoot_speed: f64,
     pub damage: f64,
     #[base]
     base: Base<CharacterBody2D>,
@@ -48,22 +51,14 @@ impl PlayerCharacter {
             return;
         }
 
-        let mut projectile_hit_shape = self.base
-            .get_node_as::<CollisionShape2D>("ProjectileHitDetector/ProjectileCollisionShape2D");
-        let mut physical_hit_shape = self.base
-            .get_node_as::<CollisionShape2D>("PhysicalHitDetector/PhysicalCollisionShape2D");
-
+        let mut audio_taken_damage = self.base.get_node_as::<AudioStreamPlayer>("DamageAudio");
+        audio_taken_damage.set_bus("aaa".into());
+        audio_taken_damage.play();
 
         self.change_color_on_damage(1., 0.69, 0.69);
 
         self.hit_points.0 -= 1;
 
-        /*
-        self.base.emit_signal(
-            "hit".into(),
-            &[self.hit_points.0.to_variant(), self.hit_points.1.to_variant()]
-        );
-        */
         self.base.get_tree().unwrap()
             .call_group("hud".into(), "update_hp".into(),&[
                 self.hit_points.0.to_variant(),
@@ -81,14 +76,12 @@ impl PlayerCharacter {
                     "player_died".into(),
                     &[self.name.to_variant()]
                 );
-            //,______________________________,
-            //|           yuo dead           |
-            //|      display some stats      |
-            //|                              |
-            //|      [restart_game_btn]      |
-            //|      [back_to_menu_btn]      |
-            //|______________________________|
         }
+
+        let mut projectile_hit_shape = self.base
+            .get_node_as::<CollisionShape2D>("ProjectileHitDetector/ProjectileCollisionShape2D");
+        let mut physical_hit_shape = self.base
+            .get_node_as::<CollisionShape2D>("PhysicalHitDetector/PhysicalCollisionShape2D");
 
         physical_hit_shape.set_deferred("disabled".into(), true.to_variant());
         projectile_hit_shape.set_deferred("disabled".into(), true.to_variant());
@@ -129,6 +122,12 @@ impl PlayerCharacter {
 
     #[func]
     fn shoot(&mut self, mut shoot_direction: Vector2) {
+        let mut shoot_timer = self.base.get_node_as::<Timer>("CanShootTimer");
+
+        if shoot_timer.get_time_left() > 0.0 {
+            return;
+        }
+        shoot_timer.start();
         let mut bullet_scene = self.bullet.instantiate_as::<Area2D>();
         bullet_scene.set_position(self.base.get_position());
 
@@ -138,6 +137,10 @@ impl PlayerCharacter {
         let mut run = self.base.get_tree().unwrap()
             .get_first_node_in_group("run".into()).unwrap();
         run.add_child(bullet_scene.clone().upcast());
+
+        let mut audio_shoot = self.base.get_node_as::<AudioStreamPlayer>("ShootAudio");
+        audio_shoot.set_bus("aaa".into());
+        audio_shoot.play();
     }
 
     #[func]
@@ -181,6 +184,7 @@ impl ICharacterBody2D for PlayerCharacter {
             name: String::from("Placeholder_Name"), 
             hit_points: (1, 1, 1.),
             speed: DEFAULTS.speed,
+            shoot_speed: 0.35,
             damage: 10.,
             base,
             bullet: PackedScene::new(),
@@ -194,10 +198,14 @@ impl ICharacterBody2D for PlayerCharacter {
         self.damage = self.base.get_meta("damage".into()).to(); 
         let speed: f32 = self.base.get_meta("speed".into()).to(); 
         self.speed *= speed;
-
+        let shoot_speed: f32 = self.base.get_meta("shoot_speed".into()).to();
+        self.shoot_speed = shoot_speed as f64;
         let viewport = self.base.get_viewport_rect();
         let position = Vector2::new(viewport.size.x / 2., viewport.size.y / 2.);
         self.base.set_global_position(position);
+
+        let mut shoot_timer = self.base.get_node_as::<Timer>("CanShootTimer");
+        shoot_timer.set_wait_time(self.shoot_speed);
 
         self.bullet = load("res://scenes/projectile.tscn");
         godot_print!("{}", self.name);
@@ -252,9 +260,9 @@ impl ICharacterBody2D for PlayerCharacter {
     
     fn process(&mut self, delta: f64) {
         if self.hit_points.0 == 0 {
-            godot_print!(":skull_emoji:");
             return;
         }
+
         self.update_hp_timeout(delta);
 
         let mut shoot: bool = false; 
