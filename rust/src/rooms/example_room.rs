@@ -1,9 +1,8 @@
 use godot::{
     prelude::*,
     engine::{
-        INode2D,
         Node2D,
-        NodeExt,
+        INode2D,
         Polygon2D,
         TileMap,
     }
@@ -12,21 +11,14 @@ use godot::{
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-struct ExampleRoom {
+struct DDLBaseRoom {
     #[base]
     base: Base<Node2D>,
     is_cleared: bool,
 }
 
 #[godot_api]
-impl ExampleRoom {
-    #[func]
-    pub fn new_game(&mut self) {
-        let mut player = self.base.get_node_as
-            ::<crate::character::PlayerCharacter>("Character");
-
-        player.bind_mut().start();
-    }
+impl DDLBaseRoom {
     #[func]
     fn check_enemies(&mut self) {
         let nodes = self.base.get_tree().unwrap().get_nodes_in_group("enemy".into());
@@ -53,7 +45,7 @@ impl ExampleRoom {
     }
 }
 #[godot_api]
-impl INode2D for ExampleRoom {
+impl INode2D for DDLBaseRoom {
     fn init(base: Base<Node2D>) -> Self {
         Self {
             base,

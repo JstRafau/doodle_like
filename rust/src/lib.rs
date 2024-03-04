@@ -4,8 +4,9 @@ use godot::{
 };
 
 pub mod character;
-pub mod rooms;
+pub mod level;
 pub mod projectile;
+pub mod rooms;
 pub mod run;
 
 struct DoodleLikeRs;
@@ -14,11 +15,11 @@ struct DoodleLikeRs;
 unsafe impl ExtensionLibrary for DoodleLikeRs {
 }
 
-pub struct Defaults {
+pub struct DDLDefaults {
     pub speed: f32, 
 }
 
-impl Defaults {
+impl DDLDefaults {
     pub const fn new() -> Self {
         Self {
             speed: 350.,
@@ -26,5 +27,5 @@ impl Defaults {
     }
 }
 
-const DEFAULTS: Defaults = Defaults::new();
+const DEFAULTS: DDLDefaults = DDLDefaults::new();
 

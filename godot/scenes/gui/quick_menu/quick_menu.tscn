@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0qb4b62vtffb"]
+
+[ext_resource type="Script" path="res://scenes/gui/quick_menu/quick_menu.gd" id="1_dexb8"]
+[ext_resource type="Texture2D" uid="uid://dwx6f2stt4nlk" path="res://assets/sprites/gui/game_over/game_over_bg_temp.png" id="1_j5pe5"]
+[ext_resource type="Script" path="res://scenes/gui/quick_menu/back_to_menu.gd" id="2_nl81h"]
+
+[node name="Control" type="Control"]
+process_mode = 3
+z_index = 11
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dexb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.768627, 1, 1, 1)
+position = Vector2(638, 362)
+texture = ExtResource("1_j5pe5")
+
+[node name="back_to_menu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 482.0
+offset_right = 748.0
+offset_bottom = 535.0
+theme_override_font_sizes/font_size = 32
+text = "Back to menu
+"
+script = ExtResource("2_nl81h")
+
+[node name="settings" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+disabled = true

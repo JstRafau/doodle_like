@@ -12,7 +12,7 @@ use crate::DEFAULTS;
 
 #[derive(GodotClass)]
 #[class(base=Area2D)]
-pub struct Projectile {
+pub struct DDLProjectile {
     pub speed: real,
     pub damage: f64,
     #[base]
@@ -21,7 +21,7 @@ pub struct Projectile {
 
 
 #[godot_api]
-impl Projectile {
+impl DDLProjectile {
     #[func]
     fn set_collision(&mut self) {
         let mut collision_shape = self
@@ -30,11 +30,12 @@ impl Projectile {
 
         collision_shape.set_disabled(false);
     }
+
     #[func]
     fn on_bullet_body_entered(&mut self, mut body: Gd<Node2D>) {
-        let hostile_source = self.base.get_meta("hostile".into());
-        let idk_how_to_compare_it_and_it_will_be_replaced_anyway: Variant = true.to_variant();
-        if hostile_source.ne(&idk_how_to_compare_it_and_it_will_be_replaced_anyway) && body.is_in_group("enemy".into()) {
+        godot_print!("boom");
+        let true_variant: Variant = true.to_variant();
+        if  self.base.get_meta("hostile".into()).ne(&true_variant) && body.is_in_group("enemy".into()) {
             body.queue_free();
         }
         self.base.queue_free();
@@ -43,7 +44,7 @@ impl Projectile {
 
 
 #[godot_api]
-impl IArea2D for Projectile {
+impl IArea2D for DDLProjectile {
     fn init(base: Base<Area2D>) -> Self {
         Self {
             speed: DEFAULTS.speed,

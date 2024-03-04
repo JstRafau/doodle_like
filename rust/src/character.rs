@@ -16,7 +16,7 @@ use crate::DEFAULTS;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-pub struct PlayerCharacter {
+pub struct DDLPlayerCharacter{
     pub name: String,
     pub hit_points: (u8, u8, f64),
     pub speed: real,
@@ -28,7 +28,7 @@ pub struct PlayerCharacter {
 }
 
 #[godot_api]
-impl PlayerCharacter {
+impl DDLPlayerCharacter{
     // signals
     #[signal]
     fn hit();
@@ -178,7 +178,7 @@ impl PlayerCharacter {
 }
 
 #[godot_api]
-impl ICharacterBody2D for PlayerCharacter {
+impl ICharacterBody2D for DDLPlayerCharacter{
     fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
             name: String::from("Placeholder_Name"), 
@@ -267,7 +267,7 @@ impl ICharacterBody2D for PlayerCharacter {
 
         let mut shoot: bool = false; 
         for i in ["aim_left", "aim_right", "aim_up", "aim_down"] {
-            if Input::singleton().is_action_just_pressed(i.into()) {
+            if Input::singleton().is_action_pressed(i.into()) {
                 shoot = true;
                 break;
             }

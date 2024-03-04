@@ -1,13 +1,15 @@
 use godot::{
     engine::{
-        Control, INode2D, Node2D, NodeExt
+        Control,
+        Node2D,
+        INode2D,
     }, prelude::*
 };
 
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-pub struct Run {
+pub struct DDLRun {
     game_over: Gd<PackedScene>,
     game_ending: Gd<PackedScene>,
     quick_menu: Gd<PackedScene>,
@@ -16,7 +18,7 @@ pub struct Run {
 }
 
 #[godot_api]
-impl Run {
+impl DDLRun {
     #[func]
     fn quick_menu(&mut self) {
         let quick_menu = self.quick_menu.instantiate_as::<Control>();
@@ -43,7 +45,7 @@ impl Run {
 }
 
 #[godot_api]
-impl INode2D for Run {
+impl INode2D for DDLRun {
     fn init(base: Base<Node2D>) -> Self {
         Self {
             game_over: PackedScene::new(),

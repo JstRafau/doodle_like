@@ -4,7 +4,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6n1u"]
 
-[node name="Projectile" type="Projectile"]
+[node name="Projectile" type="DDLProjectile"]
 collision_layer = 2
 collision_mask = 2
 metadata/hostile = false

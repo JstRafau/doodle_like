@@ -9,14 +9,14 @@ use godot::{
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-struct EntranceRoom {
+struct DDLEntranceRoom {
     #[base]
     base: Base<Node2D>,
     is_cleared: bool,
 }
 
 #[godot_api]
-impl EntranceRoom {
+impl DDLEntranceRoom {
     #[func]
     pub fn new_game(&mut self) {
         godot_print!("temp");
@@ -24,7 +24,7 @@ impl EntranceRoom {
 }
 
 #[godot_api]
-impl INode2D for EntranceRoom {
+impl INode2D for DDLEntranceRoom {
     fn init(base: Base<Node2D>) -> Self {
         Self {
             base,

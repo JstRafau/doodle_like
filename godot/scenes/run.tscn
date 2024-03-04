@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ccv4tccib2khq" path="res://scenes/rooms/example_room.tscn" id="1_f2flp"]
 [ext_resource type="PackedScene" uid="uid://bv456qoie2yjt" path="res://scenes/gui/run/HUD.tscn" id="2_j1ht8"]
 
-[node name="Run" type="Run" groups=["run"]]
+[node name="Run" type="DDLRun" groups=["run"]]
 metadata/default_speed = 350.0
 
 [node name="ExampleRoom" parent="." instance=ExtResource("1_f2flp")]
