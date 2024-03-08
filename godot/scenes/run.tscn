@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://bypk5dykh5l2j"]
 
-[ext_resource type="PackedScene" uid="uid://ccv4tccib2khq" path="res://scenes/rooms/example_room.tscn" id="1_f2flp"]
 [ext_resource type="PackedScene" uid="uid://bv456qoie2yjt" path="res://scenes/gui/run/HUD.tscn" id="2_j1ht8"]
+[ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="3_rssbe"]
 
 [node name="Run" type="DDLRun" groups=["run"]]
 metadata/default_speed = 350.0
 
-[node name="ExampleRoom" parent="." instance=ExtResource("1_f2flp")]
-process_mode = 1
-show_behind_parent = true
-
 [node name="Run_UI" parent="." instance=ExtResource("2_j1ht8")]
+z_index = 1
+
+[node name="enemy" parent="." instance=ExtResource("3_rssbe")]
+position = Vector2(271, 218)

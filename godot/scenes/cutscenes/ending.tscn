@@ -1,3 +1,21 @@
-[gd_scene format=3 uid="uid://dkp0kqpp3dp1h"]
+[gd_scene load_steps=2 format=3 uid="uid://dkp0kqpp3dp1h"]
+
+[ext_resource type="Script" path="res://scenes/cutscenes/ending.gd" id="1_ybhru"]
 
 [node name="Node" type="Node"]
+script = ExtResource("1_ybhru")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 245.0
+offset_top = 148.0
+offset_right = 285.0
+offset_bottom = 171.0
+theme_override_font_sizes/font_size = 80
+text = "GG Game :-)"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

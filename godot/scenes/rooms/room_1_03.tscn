@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://datc3ma5h8g2x"]
+
+[ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="1_fmeck"]
+[ext_resource type="Texture2D" uid="uid://di1gop18qh8kj" path="res://assets/sprites/rooms/room_bg_grid_1a.png" id="2_qho00"]
+[ext_resource type="TileSet" uid="uid://d1omb350828q2" path="res://assets/sprites/rooms/room.tres" id="3_jcl5o"]
+[ext_resource type="Texture2D" uid="uid://cxcekugtfj5i1" path="res://assets/sprites/rooms/blat.png" id="4_fm057"]
+
+[node name="BaseRoom" type="DDLBaseRoom"]
+metadata/is_cleared = false
+metadata/d_up = true
+metadata/d_right = true
+metadata/d_down = true
+metadata/d_left = true
+
+[node name="enemy" parent="." instance=ExtResource("1_fmeck")]
+position = Vector2(0, -11)
+mass = 0.35
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("2_qho00")
+
+[node name="TileMap" type="TileMap" parent="."]
+clip_children = 2
+z_index = -1
+position = Vector2(40, -40)
+tile_set = ExtResource("3_jcl5o")
+format = 2
+layer_0/tile_data = PackedInt32Array(262144, 524288, 196608, 327678, 524288, 196608, 327677, 524288, 196608, 327676, 524288, 196608, 327675, 524288, 196608, 327674, 524288, 196608, 327673, 524288, 196608, 327672, 458752, 196608, 262145, 524288, 196608, 262146, 524288, 196608, 262147, 524288, 196608, 262148, 524288, 196608, 262149, 524288, 196608, 262150, 458752, 131072, 262151, 0, 0, -196616, 458752, 0, -196614, 524288, 0, -196615, 524288, 0, -196613, 524288, 0, -196611, 524288, 0, -196612, 524288, 0, -196610, 524288, 0, -196609, 589824, 0, -262142, 524288, 0, -262141, 524288, 0, -262140, 524288, 0, -262139, 524288, 0, -262137, 0, 0, 327671, 0, 0, 262135, 0, 0, 196599, 0, 0, 131063, 0, 0, 65527, 0, 0, -9, 0, 0, -65545, 0, 0, -131081, 0, 0, -196617, 0, 0, 196615, 0, 0, 131079, 0, 0, 65543, 0, 0, 7, 0, 0, -65529, 0, 0, -131065, 0, 0, -196601, 0, 0, 131064, 524288, 65536, -131080, 524288, 65536, 262136, 524288, 65536, -8, 524288, 65536, 196600, 524288, 65536, -65544, 524288, 65536, 131078, 524288, 131072, -131066, 524288, 131072, 196614, 524288, 131072, -65530, 524288, 131072, 65542, 524288, 131072, -196602, 524288, 131072, 65528, 589824, 65536, 6, 589824, 131072, -262138, 458752, 327680, -262143, 524288, 0, -262144, 524288, 0, 327679, 589824, 196608)
+layer_1/tile_data = PackedInt32Array(65532, 65536, 7, 65533, 131072, 7, -65536, 524288, 7, -1, 131072, 7, 65534, 393216, 196615, -2, 524288, 65543, 131070, 524288, 131079, 65536, 524288, 196615, 0, 393216, 131079, 2, 65536, 65543, 1, 131072, 7, 131071, 131072, 7)
+layer_2/tile_data = PackedInt32Array(196612, 65536, 0, 262138, 65536, 0, -131078, 65536, 0, -196604, 65536, 0)
+
+[node name="Desk" type="Polygon2D" parent="TileMap"]
+z_index = -1
+position = Vector2(-680, -320)
+texture = ExtResource("4_fm057")
+polygon = PackedVector2Array(754, 394, 912, 392, 909, 343, 912, 326, 797, 329, 754, 326, 687, 320, 691, 360, 685, 408, 593, 407, 592, 325, 525, 326, 475, 329, 368, 326, 372, 346, 368, 392, 525, 393, 530, 471, 750, 472)
+
+[node name="Desk2" type="Polygon2D" parent="TileMap"]
+z_index = -1
+position = Vector2(-680, -320)
+texture = ExtResource("4_fm057")
+polygon = PackedVector2Array(754, 326, 750, 248, 532, 249, 525, 326, 593.615, 326, 595, 313, 685, 314, 686.615, 326)

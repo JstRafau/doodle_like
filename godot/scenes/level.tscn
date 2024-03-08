@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://43jicq7ph5w"]
+
+[ext_resource type="PackedScene" uid="uid://b6l5es0nhk0cu" path="res://scenes/rooms/ddl_entrance_room.tscn" id="1_hawyk"]
+
+[node name="DDLLevel" type="DDLLevel" groups=["level"]]
+metadata/floor = 0
+
+[node name="DDLEntranceRoom" parent="." instance=ExtResource("1_hawyk")]
