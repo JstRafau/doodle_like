@@ -1,3 +1,3 @@
-pub mod example_room;
+pub mod base_room;
 pub mod entrance_room;
 

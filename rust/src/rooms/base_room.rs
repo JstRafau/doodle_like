@@ -22,26 +22,37 @@ impl DDLBaseRoom {
     #[func]
     fn check_enemies(&mut self) {
         let nodes = self.base.get_tree().unwrap().get_nodes_in_group("enemy".into());
-        let mut enemy_counter: u8 = 0;
-        for _item in nodes.iter_shared(){
-            enemy_counter += 1;
-        }
-        match enemy_counter {
+        let enemy_count = nodes.iter_shared().count();
+
+        match enemy_count {
             0 => {
                 self.is_cleared = true;
-                godot_print!("Killed 'em all");
                 // temporary
-                self.base
+                let mut tree = self.base
                     .get_tree()
-                    .unwrap()
-                    .call_group(
-                        "run".into(),
-                        "player_died".into(),
-                        &["gg game".to_variant()]
-                        );
+                    .unwrap();
+                tree.call_group(
+                    "run".into(),
+                    "player_won".into(),
+                    &[/*"gg game".to_variant()*/]
+                );
+                tree.call_group(
+                    "run".into(),
+                    "jump_to_end_scene".into(),
+                    &[/*"gg game".to_variant()*/]
+                );
             },
             _ => (),
         }
+    }
+
+    #[func]
+    fn open_door(&self, side: u8) {
+        /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+         *  A node will block doors, and after calling this function,
+         *  it'll play an animation of it being erased,
+         *  together with disabling it's hitbox.
+         *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */ 
     }
 }
 #[godot_api]
@@ -54,6 +65,7 @@ impl INode2D for DDLBaseRoom {
     }
 
     fn ready(&mut self) {
+        self.is_cleared = self.base.get_meta("is_cleared".into()).to();
         /*
         let room_tiles = self.base.get_node_as::<TileMap>("TileMap");
         let mut polygon = self.base.get_node_as::<Polygon2D>("Desk");
@@ -75,10 +87,6 @@ impl INode2D for DDLBaseRoom {
         polygon.set_polygon(test);
         godot_print!("{:?}", desk_tiles);
         */
-        //
-        let viewport = self.base.get_viewport_rect();
-        let position = Vector2::new(viewport.size.x / 2., viewport.size.y / 2.);
-        self.base.set_global_position(position);
     }
     fn process(&mut self, _delta: f64) {
         if !self.is_cleared {

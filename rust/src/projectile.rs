@@ -33,7 +33,6 @@ impl DDLProjectile {
 
     #[func]
     fn on_bullet_body_entered(&mut self, mut body: Gd<Node2D>) {
-        godot_print!("boom");
         let true_variant: Variant = true.to_variant();
         if  self.base.get_meta("hostile".into()).ne(&true_variant) && body.is_in_group("enemy".into()) {
             body.queue_free();

@@ -35,6 +35,63 @@ impl DDLPlayerCharacter{
 
     // functions
     #[func]
+    pub fn check_room_change(&mut self) {
+        let pos = self.base.get_position();
+        if pos.y > 640.0 {
+            self.base.set_velocity(Vector2::ZERO);
+            self.base.set_position(Vector2::new(pos.x, 60.0));
+            self.base
+                .get_tree()
+                .unwrap()
+                .call_group(
+                    "level".into(),
+                    "shift_rooms".into(),
+                    &[Vector2::new(0.0, -1.0).to_variant()]
+                );
+            return;
+        }
+        if pos.y < 40.0 {
+            self.base.set_velocity(Vector2::ZERO);
+            self.base.set_position(Vector2::new(pos.x, 600.0));
+            self.base
+                .get_tree()
+                .unwrap()
+                .call_group(
+                    "level".into(),
+                    "shift_rooms".into(),
+                    &[Vector2::new(0.0, 1.0).to_variant()]
+                );
+            return;
+        }
+        if pos.x > 1170.0 {
+            self.base.set_velocity(Vector2::ZERO);
+            self.base.set_position(Vector2::new(140.0, pos.y));
+            self.base
+                .get_tree()
+                .unwrap()
+                .call_group(
+                    "level".into(),
+                    "shift_rooms".into(),
+                    &[Vector2::new(-1.0, 0.0).to_variant()]
+                );
+            return;
+        }
+        if pos.x < 110.0 {
+            self.base.set_velocity(Vector2::ZERO);
+            self.base.set_position(Vector2::new(1120.0, pos.y));
+            self.base
+                .get_tree()
+                .unwrap()
+                .call_group(
+                    "level".into(),
+                    "shift_rooms".into(),
+                    &[Vector2::new(1.0, 0.0).to_variant()]
+                );
+            return;
+        }
+    }
+
+    #[func]
     pub fn start(&mut self) {
         self.base.show();
 
@@ -208,7 +265,6 @@ impl ICharacterBody2D for DDLPlayerCharacter{
         shoot_timer.set_wait_time(self.shoot_speed);
 
         self.bullet = load("res://scenes/projectile.tscn");
-        godot_print!("{}", self.name);
     }
 
     fn physics_process(&mut self, delta: f64) {
@@ -230,6 +286,8 @@ impl ICharacterBody2D for DDLPlayerCharacter{
                 .move_toward(input_velocity * self.speed, delta as f32 * self.speed * 12.);
             self.base.set_velocity(current_velocity);
             self.base.move_and_slide();
+            
+            self.check_room_change();
 
             let animation: &str;
             let mut flip: bool = false;

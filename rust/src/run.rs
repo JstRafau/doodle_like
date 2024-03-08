@@ -12,6 +12,7 @@ use godot::{
 pub struct DDLRun {
     game_over: Gd<PackedScene>,
     game_ending: Gd<PackedScene>,
+    levels: [Gd<PackedScene>; 3],
     quick_menu: Gd<PackedScene>,
     #[base]
     base: Base<Node2D>,
@@ -36,11 +37,15 @@ impl DDLRun {
 
         self.base.get_tree().unwrap().set_pause(true);
     }
-    fn _player_won(&mut self) {
+
+    #[func]
+    fn player_won(&mut self) {
         self.game_ending = load("res://scenes/cutscenes/ending.tscn");
     }
-    fn _jump_to_end_scene(&mut self) {
-        
+
+    #[func]
+    fn jump_to_end_scene(&mut self) {
+        self.base.get_tree().unwrap().change_scene_to_packed(self.game_ending.clone());
     }
 }
 
@@ -50,6 +55,11 @@ impl INode2D for DDLRun {
         Self {
             game_over: PackedScene::new(),
             game_ending: PackedScene::new(),
+            levels: [
+                PackedScene::new(),
+                PackedScene::new(),
+                PackedScene::new()
+            ],
             quick_menu: PackedScene::new(),
             base, 
         }
@@ -57,6 +67,13 @@ impl INode2D for DDLRun {
     fn ready(&mut self) {
         self.game_over = load("res://scenes/gui/game_over/game_over.tscn");
         self.quick_menu = load("res://scenes/gui/quick_menu/quick_menu.tscn");
+        self.levels[0] = load("res://scenes/level.tscn");
+        let mut level = self.levels[0].instantiate_as::<Node2D>();
+        let viewport = self.base.get_viewport_rect();
+        let position = Vector2::new(viewport.size.x / 2., viewport.size.y / 2.);
+        level.set_position(position);
+        level.set_meta("floor".into(), 1.to_variant());
+        self.base.add_child(level.upcast());
     }
 
     fn process(&mut self, _delta: f64) {
