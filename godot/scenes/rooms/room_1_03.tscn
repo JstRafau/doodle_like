@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://datc3ma5h8g2x"]
+[gd_scene load_steps=4 format=3 uid="uid://datc3ma5h8g2x"]
 
-[ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="1_fmeck"]
 [ext_resource type="Texture2D" uid="uid://di1gop18qh8kj" path="res://assets/sprites/rooms/room_bg_grid_1a.png" id="2_qho00"]
 [ext_resource type="TileSet" uid="uid://d1omb350828q2" path="res://assets/sprites/rooms/room.tres" id="3_jcl5o"]
 [ext_resource type="Texture2D" uid="uid://cxcekugtfj5i1" path="res://assets/sprites/rooms/blat.png" id="4_fm057"]
@@ -11,10 +10,6 @@ metadata/d_up = true
 metadata/d_right = true
 metadata/d_down = true
 metadata/d_left = true
-
-[node name="enemy" parent="." instance=ExtResource("1_fmeck")]
-position = Vector2(0, -11)
-mass = 0.35
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10

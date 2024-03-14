@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccv4tccib2khq"]
+[gd_scene load_steps=4 format=3 uid="uid://ccv4tccib2khq"]
 
 [ext_resource type="Texture2D" uid="uid://di1gop18qh8kj" path="res://assets/sprites/rooms/room_bg_grid_1a.png" id="1_b5uxs"]
 [ext_resource type="TileSet" uid="uid://d1omb350828q2" path="res://assets/sprites/rooms/room.tres" id="3_4n6vx"]
-[ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="4_h0ahd"]
-[ext_resource type="PackedScene" uid="uid://bu4l3ovfoobfv" path="res://scenes/enemies/enemy_2_integral.tscn" id="5_l04pt"]
 [ext_resource type="Texture2D" uid="uid://cxcekugtfj5i1" path="res://assets/sprites/rooms/blat.png" id="6_3skmb"]
 
 [node name="BaseRoom" type="DDLBaseRoom"]
@@ -12,10 +10,6 @@ metadata/d_up = true
 metadata/d_right = true
 metadata/d_down = false
 metadata/d_left = true
-
-[node name="enemy" parent="." instance=ExtResource("4_h0ahd")]
-position = Vector2(464, 0)
-mass = 0.35
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
@@ -42,5 +36,3 @@ z_index = -1
 position = Vector2(-680, -320)
 texture = ExtResource("6_3skmb")
 polygon = PackedVector2Array(1090, 312, 1134, 308, 1152, 313, 1150, 88, 926, 86, 932, 103, 927, 152, 1007, 153, 1008, 233, 1086, 235)
-
-[node name="Enemy2Integral" parent="." instance=ExtResource("5_l04pt")]

@@ -22,7 +22,6 @@ collision_layer = 11
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_0ame6")
 debug_color = Color(0.243137, 0.505882, 1, 0.419608)
 
