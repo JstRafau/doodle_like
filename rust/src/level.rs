@@ -1,11 +1,8 @@
-use godot::{engine::CenterContainer, prelude::*};
+use godot::{
+    engine::utilities::randi,
+    prelude::*,
+};
 
-
-#[derive(Copy, Clone)]
-struct RoomData {
-    room_id: u8, 
-    is_cleared: bool,
-}
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
@@ -13,7 +10,7 @@ pub struct DDLLevel {
     #[base]
     base: Base<Node2D>,
     map: [[bool; 11]; 11],
-    player_coords: (u8, u8),
+    player_coords: Vector2i,
 }
 
 
@@ -21,32 +18,77 @@ pub struct DDLLevel {
 impl DDLLevel {
     //#[func]
     fn fill_map(&mut self) -> [[bool; 11]; 11] {
-        let center = (5, 5);
+        let mut room_pos_selector: Vector2i = Vector2i::new(5, 5);
         let mut new_map: [[bool; 11]; 11] = [[false; 11]; 11];
+        new_map[room_pos_selector.x as usize][room_pos_selector.y as usize] = true;
 
-        new_map[center.0][center.1 + 1] = true;
-        new_map[center.0][center.1 + 2] = true;
-        new_map[center.0 + 1][center.1 + 2] = true;
+        let floor: u8 = self.base.get_meta("floor".into()).to();
+
+        for i in 0..=(floor + 3) {
+            loop {
+                let direction: i64 = randi().abs() % 4;
+                match direction {
+                    0 => room_pos_selector.x -= 1,
+                    1 => room_pos_selector.y += 1,
+                    2 => room_pos_selector.x += 1,
+                    _ => room_pos_selector.y -= 1,
+                };
+                if !new_map[room_pos_selector.x as usize][room_pos_selector.y as usize] {
+                    new_map[room_pos_selector.x as usize][room_pos_selector.y as usize] = true;
+                    break;
+                }
+            }
+        }
+
+        for j in 0..=10 {
+            let mut row_of_rooms: String = String::new();
+            for i in 0..=10 {
+                if new_map[i][j] {
+                    row_of_rooms.push_str("#");
+                } else {
+                    row_of_rooms.push_str(".");
+                }
+            }
+            godot_print!("{}", row_of_rooms);
+        }
 
         new_map
     }
 
-    fn place_room(&mut self) -> Vec<(i8, i8)> {
-        let center = (5, 5);
-        let mut rooms_coords_relative: Vec<(i8, i8)> = Vec::new();
+    fn place_room(&mut self) -> Vec<Vector2i> {
+        let center: Vector2i = Vector2i::new(5, 5);
+        let mut rooms_coords_relative: Vec<Vector2i> = Vec::new();
         for i in 0..=10 {
             for j in 0..=10 {
                 match self.map[i][j] {
                     false => (),
                     true => {
-                        rooms_coords_relative.push((i as i8 - center.0, j as i8 - center.1));
+                        rooms_coords_relative.push(Vector2i::new(
+                                i as i32 - center.x,
+                                j as i32 - center.y
+                        ));
                     },
                 }
             }
         }
-        godot_print!("{:?}", rooms_coords_relative);
         rooms_coords_relative
     }
+
+    #[func]
+    fn add_room_scene(&mut self, coord: Vector2i) {
+        let mut new_room_packed = PackedScene::new();
+        new_room_packed = load("res://scenes/rooms/room_1_02.tscn");
+        let mut new_room = new_room_packed
+            .instantiate_as::<Node2D>();
+        new_room.set_transform(
+            Transform2D::IDENTITY.translated_local(
+                Vector2::new(
+                    1280.0 * coord.x as f32,
+                    720.0 * coord.y as f32
+        )));
+        self.base.add_child(new_room.upcast());
+    }
+
     #[func]
     fn shift_rooms(&mut self, dir: Vector2) { 
         let viewport = self.base.get_viewport_rect();
@@ -66,39 +108,23 @@ impl DDLLevel {
     }
 }
 
-#[godot_api]
-impl INode2D for DDLLevel {
+    #[godot_api]
+    impl INode2D for DDLLevel {
     fn init(base: Base<Node2D>) -> Self {
-
         Self {
             base,
             map: [[false; 11]; 11],
-            player_coords: (5, 5),
+            player_coords: Vector2i::new(5, 5),
         }
     }
 
     fn ready(&mut self) {
         self.map = self.fill_map();
         let rooms = self.place_room();
-        let mut room01_pack = PackedScene::new();
-        room01_pack = load("res://scenes/rooms/room_1_02.tscn");
-        let mut room02_pack = PackedScene::new();
-        room02_pack = load("res://scenes/rooms/room_1_03.tscn");
-        let mut room03_pack = PackedScene::new();
-        room03_pack = load("res://scenes/rooms/room_1_01.tscn");
-
-        let mut room_01 = room01_pack.instantiate_as::<Node2D>();
-        let mut room_02 = room02_pack.instantiate_as::<Node2D>();
-        let mut room_03 = room03_pack.instantiate_as::<Node2D>();
-
-        room_01.set_transform(Transform2D::IDENTITY.translated_local(Vector2::new(0.0, 720.0)));
-        room_02.set_transform(Transform2D::IDENTITY.translated_local(Vector2::new(0.0, 1440.0)));
-        room_03.set_transform(Transform2D::IDENTITY.translated_local(Vector2::new(1280.0, 1440.0)));
-
-        self.base.add_child(room_01.upcast());
-        self.base.add_child(room_02.upcast());
-        self.base.add_child(room_03.upcast());
-        godot_warn!("{}", self.base.get_meta("floor".into()));
+        rooms.iter().for_each(|coord|
+            if coord.x != 0 || coord.y != 0 {
+            self.add_room_scene(coord.clone())
+        });
     }
 
     fn process(&mut self, _delta: f64) {
