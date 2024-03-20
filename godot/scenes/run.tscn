@@ -1,10 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://bypk5dykh5l2j"]
+[gd_scene load_steps=5 format=3 uid="uid://bypk5dykh5l2j"]
 
 [ext_resource type="PackedScene" uid="uid://bv456qoie2yjt" path="res://scenes/gui/run/HUD.tscn" id="2_j1ht8"]
+[ext_resource type="PackedScene" uid="uid://bvy3djyvudokn" path="res://scenes/rooms/door_block_vertical.tscn" id="3_jqcc3"]
 [ext_resource type="PackedScene" uid="uid://ct5wumdeey047" path="res://scenes/enemies/enemy.tscn" id="3_rssbe"]
+[ext_resource type="PackedScene" uid="uid://drrfgsfxofj7s" path="res://scenes/rooms/door_block_horizontal.tscn" id="4_5okj4"]
 
 [node name="Run" type="DDLRun" groups=["run"]]
 metadata/default_speed = 350.0
+
+[node name="door_block_vertical2" parent="." instance=ExtResource("3_jqcc3")]
+position = Vector2(1200, 360)
+
+[node name="door_block_vertical" parent="." instance=ExtResource("3_jqcc3")]
+position = Vector2(80, 360)
+
+[node name="door_block_horizontal" parent="." instance=ExtResource("4_5okj4")]
+position = Vector2(640, 680)
+
+[node name="door_block_horizontal2" parent="." instance=ExtResource("4_5okj4")]
+position = Vector2(640, 40)
 
 [node name="Run_UI" parent="." instance=ExtResource("2_j1ht8")]
 z_index = 1

@@ -22,6 +22,7 @@ pub struct DDLPlayerCharacter{
     pub speed: real,
     pub shoot_speed: f64,
     pub damage: f64,
+    player_coords: Vector2i,
     #[base]
     base: Base<CharacterBody2D>,
     bullet: Gd<PackedScene>,
@@ -32,6 +33,12 @@ impl DDLPlayerCharacter{
     // signals
     #[signal]
     fn hit();
+
+    #[func]
+    fn pass_coords(&self){
+        self.base.get_tree().unwrap()
+            .call_group("room".into(), "has_player_entered".into(), &[self.player_coords.to_variant()]);
+    }
 
     // functions
     #[func]
@@ -48,6 +55,8 @@ impl DDLPlayerCharacter{
                     "shift_rooms".into(),
                     &[Vector2::new(0.0, -1.0).to_variant()]
                 );
+            self.player_coords.y += 1;
+            self.pass_coords();
             return;
         }
         if pos.y < 40.0 {
@@ -61,6 +70,8 @@ impl DDLPlayerCharacter{
                     "shift_rooms".into(),
                     &[Vector2::new(0.0, 1.0).to_variant()]
                 );
+            self.player_coords.y -= 1;
+            self.pass_coords();
             return;
         }
         if pos.x > 1170.0 {
@@ -74,6 +85,8 @@ impl DDLPlayerCharacter{
                     "shift_rooms".into(),
                     &[Vector2::new(-1.0, 0.0).to_variant()]
                 );
+            self.player_coords.x += 1;
+            self.pass_coords();
             return;
         }
         if pos.x < 110.0 {
@@ -87,6 +100,8 @@ impl DDLPlayerCharacter{
                     "shift_rooms".into(),
                     &[Vector2::new(1.0, 0.0).to_variant()]
                 );
+            self.player_coords.x -= 1;
+            self.pass_coords();
             return;
         }
     }
@@ -243,6 +258,7 @@ impl ICharacterBody2D for DDLPlayerCharacter{
             speed: DEFAULTS.speed,
             shoot_speed: 0.35,
             damage: 10.,
+            player_coords: Vector2i::new(0, 0),
             base,
             bullet: PackedScene::new(),
         }

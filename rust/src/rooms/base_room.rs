@@ -14,7 +14,9 @@ use godot::{
 struct DDLBaseRoom {
     #[base]
     base: Base<Node2D>,
+    is_entered: bool,
     is_cleared: bool,
+    position: Vector2i,
 }
 
 #[godot_api]
@@ -25,7 +27,8 @@ impl DDLBaseRoom {
         let enemy_count = nodes.iter_shared().count();
 
         match enemy_count {
-            0 => {
+            0 => godot_print!("pusto B)"),
+            991 => {
                 self.is_cleared = true;
                 // temporary
                 let mut tree = self.base
@@ -47,6 +50,15 @@ impl DDLBaseRoom {
     }
 
     #[func]
+    fn has_player_entered(&mut self, coords: Vector2i) {
+        godot_print!("R: {:?}", self.position);
+        godot_print!("P: {:?}", coords);
+        if coords.x == self.position.x && coords.y == self.position.y {
+            godot_print!("I'm in");
+        }
+    }
+
+    #[func]
     fn open_door(&self, side: u8) {
         /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
          *  A node will block doors, and after calling this function,
@@ -60,12 +72,18 @@ impl INode2D for DDLBaseRoom {
     fn init(base: Base<Node2D>) -> Self {
         Self {
             base,
+            is_entered: false,
             is_cleared: false,
+            position: Vector2i::ZERO,
         }
     }
 
     fn ready(&mut self) {
+        self.base.add_to_group("room".into());
         self.is_cleared = self.base.get_meta("is_cleared".into()).to();
+        self.position.x = (self.base.get_position().x / 1280.0) as i32; 
+        self.position.y = (self.base.get_position().y / 720.0) as i32; 
+        
         /*
         let room_tiles = self.base.get_node_as::<TileMap>("TileMap");
         let mut polygon = self.base.get_node_as::<Polygon2D>("Desk");
@@ -88,8 +106,9 @@ impl INode2D for DDLBaseRoom {
         godot_print!("{:?}", desk_tiles);
         */
     }
+
     fn process(&mut self, _delta: f64) {
-        if !self.is_cleared {
+        if self.is_entered && !self.is_cleared {
             self.check_enemies();
         }
     }

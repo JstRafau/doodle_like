@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvy3djyvudokn"]
+
+[ext_resource type="Texture2D" uid="uid://dp0mbwddarxyw" path="res://assets/sprites/rooms/pencil.png" id="1_tk2k0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ny4hq"]
+size = Vector2(80, 80)
+
+[node name="door_block_vertical" type="StaticBody2D" groups=["door_block"]]
+visible = false
+z_index = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ny4hq")
+disabled = true
+debug_color = Color(0.690196, 0, 0, 0.905882)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tk2k0")

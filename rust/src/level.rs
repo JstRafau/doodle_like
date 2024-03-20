@@ -10,7 +10,6 @@ pub struct DDLLevel {
     #[base]
     base: Base<Node2D>,
     map: [[bool; 11]; 11],
-    player_coords: Vector2i,
 }
 
 
@@ -114,7 +113,6 @@ impl DDLLevel {
         Self {
             base,
             map: [[false; 11]; 11],
-            player_coords: Vector2i::new(5, 5),
         }
     }
 
